@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('echeance');
             $table->string('budget');
-            $table->enum('etat', ['Disponible', 'Fiancé'])->default('Disponible');
+            $table->enum('etat', ['Disponible', 'Financé'])->default('Disponible');
             $table->foreignIdFor(Categorie::class)->constrained()->onDelete('cascade');
             // $table->enum('categorie', ['Agriculture', 'Education', 'Santé', 'Elevage', 'Informatique']);
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');

@@ -20,3 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/inscription', [UserController::class, 'store']);
+
+//Routes de mes projects
+Route::apiResource('projets',\App\Http\Controllers\api\ProjetController::class);
