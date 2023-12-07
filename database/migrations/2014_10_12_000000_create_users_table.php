@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('telephone');
             $table->enum('role', ['Porteur', 'Bailleur', 'Admin']);
             $table->enum('organisme', ['ONG', 'Entreprise', 'Particulier'])->nullable();
-            $table->timestamps();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

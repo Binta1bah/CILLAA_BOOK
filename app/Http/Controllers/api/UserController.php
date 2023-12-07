@@ -27,7 +27,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       return response()->json([
+            "status"=>"ok",
+            "message"=>"c'est bon"
+       ]);
     }
 
     /**
