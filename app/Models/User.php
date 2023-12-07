@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
+        'description',
+        'telephone',
+        'role',
+        'organisme',
     ];
 
     public function projets()

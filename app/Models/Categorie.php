@@ -9,6 +9,9 @@ class Categorie extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'libelle',
+    ];
     public function projets() {
         return $this->hasMany(Projet::class);
     }

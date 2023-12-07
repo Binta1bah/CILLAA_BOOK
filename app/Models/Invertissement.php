@@ -9,6 +9,14 @@ class Invertissement extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'montant',
+        'description',
+        'status',
+        'user_id',
+        'project_id'
+    ];
     public function User() {
         return $this->belongsTo(User::class);
     }
