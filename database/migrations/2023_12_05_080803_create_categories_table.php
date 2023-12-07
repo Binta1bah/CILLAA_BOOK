@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('porteur_de_projets', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('email');
-            $table->string('motdepasse');
-            $table->string('telephone');
-            $table->string('photo');
+            $table->string('libelle');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('porteur_de_projets');
+        Schema::dropIfExists('categories');
     }
 };

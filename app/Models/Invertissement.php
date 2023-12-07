@@ -9,12 +9,10 @@ class Invertissement extends Model
 {
     use HasFactory;
 
-    public function projet() {
-        return $this->belongsTo(Projet::class);
+    public function User() {
+        return $this->belongsTo(User::class);
     }
 
-    public function bailleur() {
-        return $this->belongsTo(Bailleur::class);
-    }
+   
 
 }

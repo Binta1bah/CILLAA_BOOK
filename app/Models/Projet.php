@@ -9,19 +9,20 @@ class Projet extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = [];
 
-    ];
-
-    public function porteur() {
-
-        return $this->belongsTo(PorteurDeProjet::class);
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function invertissements() {
+    public function invertissements()
+    {
         return $this->belongsToMany(Invertissement::class);
     }
-        
 
+    public function categories()
+    {
+        return $this->belongsTo(Projet::class);
+    }
 }

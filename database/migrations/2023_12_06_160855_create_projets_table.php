@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Categorie;
 use App\Models\PorteurDeProjet;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +22,8 @@ return new class extends Migration
             $table->string('echeance');
             $table->string('budget');
             $table->enum('etat', ['Disponible', 'Fiancé'])->default('Disponible');
-            $table->enum('categorie', ['Agriculture', 'Education', 'Santé', 'Elevage', 'Informatique']);
+            $table->foreignIdFor(Categorie::class)->constrained()->onDelete('cascade');
+            // $table->enum('categorie', ['Agriculture', 'Education', 'Santé', 'Elevage', 'Informatique']);
             $table->foreignIdFor(PorteurDeProjet::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
