@@ -1,11 +1,10 @@
 <?php
-
-namespace App\Http\Controllers;
-
-use App\Models\Article;
+namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
+use App\Models\Invertissement;
+use App\Http\Controllers\Controller;
 
-class ArticleController extends Controller
+class InvertissementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +33,7 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Article $article)
+    public function show(Invertissement $invertissement)
     {
         //
     }
@@ -42,7 +41,7 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Article $article)
+    public function edit(Invertissement $invertissement)
     {
         //
     }
@@ -50,7 +49,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, Invertissement $invertissement)
     {
         //
     }
@@ -58,7 +57,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article)
+    public function destroy(Invertissement $invertissement)
     {
         //
     }

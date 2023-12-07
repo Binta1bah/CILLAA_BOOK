@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Models\NewsLetter;
+namespace App\Http\Controllers\api;
+use App\Models\Projet;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class NewsLetterController extends Controller
+class ProjetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class NewsLetterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(NewsLetter $newsLetter)
+    public function show(Projet $projet)
     {
         //
     }
@@ -42,7 +42,7 @@ class NewsLetterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(NewsLetter $newsLetter)
+    public function edit(Projet $projet)
     {
         //
     }
@@ -50,7 +50,7 @@ class NewsLetterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, NewsLetter $newsLetter)
+    public function update(Request $request, Projet $projet)
     {
         //
     }
@@ -58,7 +58,7 @@ class NewsLetterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(NewsLetter $newsLetter)
+    public function destroy(Projet $projet)
     {
         //
     }
