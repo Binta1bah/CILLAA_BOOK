@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\UserController;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [UserController::class, 'logout']);
+});
+
+// Les routes du Bailleur
+Route::group(['middleware' => ['auth:sanctum', 'bailleur']], function () {
+    Route::get('/dashboardBailleur', [UserController::class, 'dashBordBailleur']);
+});
+
+
+// Les routes du porteur de projet
+Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
+    Route::get('/dashboardPorteur', [UserController::class, 'dashBordPorteur']);
+});
+
+
+// Les routes de l'admin
+Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
+    Route::get('/dashboardAdmin', [UserController::class, 'dashBordAdmin']);
+});
 
 
 Route::post('/inscription', [UserController::class, 'store']);
 
-Route::post('/login', [UserController::class, 'login'] );
+Route::post('/login', [UserController::class, 'connexion'])->name('login');

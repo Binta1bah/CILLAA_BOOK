@@ -2,21 +2,46 @@
 
 namespace App\Http\Controllers\api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Faker\Core\File;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use GuzzleHttp\Promise\Create;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function dashBordBailleur()
     {
-        //
+        $user = auth()->user();
+        return response()->json([
+            "message" => "Bienvenue sur ton Dashboard",
+            "data" => $user
+        ]);
+    }
+
+    public function dashBordPorteur()
+    {
+        $user = auth()->user();
+        return response()->json([
+            "message" => "Bienvenue sur ton Dashboard",
+            "data" => $user
+        ]);
+    }
+
+    public function dashBordAdmin()
+    {
+        $user = auth()->user();
+        return response()->json([
+            "message" => "Bienvenue sur ton Dashboard",
+            "data" => $user
+        ]);
     }
 
     /**
@@ -39,7 +64,8 @@ class UserController extends Controller
                     return response()->json([
                         "statut" => 1,
                         "massage" => "Vous êtes connecté en tant que Bailleur",
-                        "token" => $token
+                        "token" => $token,
+                        "datas" => $user
                     ]);
                 } elseif ($user->role === 'Porteur') {
                     $token = $user->createToken('auth_token')->plainTextToken;
@@ -67,6 +93,49 @@ class UserController extends Controller
                 "massage" => "Email Introuvable"
             ]);
         }
+    }
+
+    public function Connexion(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+
+            return Response(['message' => $validator->errors()], 401);
+        }
+
+        if (Auth::attempt($request->all())) {
+            $user = Auth::user();
+
+            if ($user->role === "Bailleur") {
+                $success =  $user->createToken('MyApp')->plainTextToken;
+                return response([
+                    'message' => 'Vous êtes connecté en tant que bailleur',
+                    'token' => $success,
+                    'datas' => $user
+                ], 200);
+            } elseif ($user->role === "Porteur") {
+                $success =  $user->createToken('MyApp')->plainTextToken;
+                return response([
+                    'message' => 'Vous êtes connecté en tant que Porteur de projet',
+                    'token' => $success,
+                    'datas' => $user
+                ], 200);
+            } elseif ($user->role === "Admin") {
+                $success =  $user->createToken('MyApp')->plainTextToken;
+                return response([
+                    'message' => 'Vous êtes connecté en tant que Admin',
+                    'token' => $success,
+                    'datas' => $user
+                ], 200);
+            }
+        }
+
+
+        return Response(['message' => 'email or password wrong'], 401);
     }
 
     /**
@@ -106,6 +175,15 @@ class UserController extends Controller
                 "data" => $user
             ]);
         }
+    }
+
+    public function logout(): Response
+    {
+        $user = Auth::user();
+
+        $user->currentAccessToken()->delete();
+
+        return Response(['message' => 'Deconnexion effectuée'], 200);
     }
 
     /**
