@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Faker\Core\File;
 
 class UserController extends Controller
 {
@@ -27,7 +29,39 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:6',
+            'image' => 'required|string',
+            'description' => 'nullable|string',
+            'telephone' => 'required|string|max:255',
+            'role' => 'required|in:Porteur,Bailleur,Admin',
+            'organisme' => 'nullable|in:ONG,Entreprise,Particulier',
+        ]);
+
+        $user= new User();
+        $user->name= $request->name;
+        $user->email= $request->email;
+        $user->password= $request->password;
+        $user->description= $request->description;
+        $user->telephone= $request->telephone;
+        $user->role= $request->role;
+        $user->organisme= $request->organisme;
+        $imageData = $request->image;
+        $imageName = time() . '.jpeg';
+        file_put_contents(public_path('image/' . $imageName), $imageData);
+        $user->image = "image/" . $imageName;
+
+        if($user->save()){
+            return response()->json([
+                "status"=>"ok",
+                "message"=>"c'est bon",
+                "data" => $user
+           ]);
+        }
+      
     }
 
     /**

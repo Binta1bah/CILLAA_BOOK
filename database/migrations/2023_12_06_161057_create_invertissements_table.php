@@ -2,6 +2,7 @@
 
 use App\Models\Projet;
 use App\Models\Bailleur;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->enum('status', ['Accepter', 'Refuser'])->nullable();
             $table->foreignIdFor(Projet::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(Bailleur::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
