@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\CategorieController;
 use App\Http\Controllers\api\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
@@ -39,6 +40,9 @@ Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
 // Les routes de l'admin
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/dashboardAdmin', [UserController::class, 'dashBordAdmin']);
+    Route::post('/ajouterCategorie', [CategorieController::class, 'store']);
+    Route::put('/ModifierCategorie/{id}', [CategorieController::class, 'update']);
+    Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
 });
 
 
