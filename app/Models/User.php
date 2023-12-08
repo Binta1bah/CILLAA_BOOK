@@ -21,7 +21,23 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
+        'description',
+        'telephone',
+        'role',
+        'organisme',
     ];
+
+    public function projets()
+    {
+        return $this->hasMany(Projet::class);
+    }
+
+    public function invertissements()
+    {
+        return $this->belongsToMany(Invertissement::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
