@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\api\ArticleController;
+use App\Http\Controllers\api\CategorieController;
+use App\Http\Controllers\api\NewsLetterController;
+use App\Http\Controllers\api\UserController;
+use App\Models\NewsLetter;
 use GuzzleHttp\Middleware;
 
 use Illuminate\Support\Facades\Route;
@@ -52,13 +57,17 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/listeCtagorie', [CategorieController::class, 'index']);
     Route::put('/ModifierCategorie/{id}', [CategorieController::class, 'update']);
     Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
-    //porteurs
-    Route::get('/listePorteur', [UserController::class, 'listePorteur']);
-    //bailleur
-    Route::get('/listeBailleur', [UserController::class, 'listeBailleur']);
-    // user
-    Route::put('/bloquerUser/{id}', [UserController::class, 'bloquerUser']);
-    Route::put('/debloquerUser/{id}', [UserController::class, 'debloquerUser']);
+
+    // CRUD ARTICLE
+    Route::get('/voirArticles', [ArticleController::class, 'index']);
+    Route::post('/ajouterArticle', [ArticleController::class, 'store']);
+    Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
+    Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
+
+     // CRUD NewsLetter
+     Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
+     Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
+     Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
 });
 
 

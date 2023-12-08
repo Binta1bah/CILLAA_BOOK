@@ -5,6 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\newslellerEmail;
+use App\Models\NewsLetter;
+use App\Notifications\InfoNewsArticle;
+use Illuminate\Support\Facades\Mail;
 
 class ArticleController extends Controller
 {
@@ -13,7 +17,15 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $article= Article::all();
+        $totalArticle= $article->count();
+
+        return response()->json([
+            "status"=>1,
+            "message"=> "voici vos articles",
+            "Total"=>$totalArticle,
+            "data"=>$article
+        ]);
     }
 
     /**
@@ -29,7 +41,35 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'photo' => 'required|string',
+            'description' => 'required|string'
+        ]);
+
+        $article = new Article();
+        $article->titre= $request->titre;
+        $imageData = $request->photo;
+        $imageName = time() . '.jpeg';
+        file_put_contents(public_path('image/' . $imageName), $imageData);
+        $article->photo = "image/" . $imageName;
+        $article->description= $request->description;
+
+        if($article->save()){
+             //Envoie Email aux abonnées du newsletters
+            //  $newsletters = NewsLetter::all();
+            //  foreach($newsletters as $newsletter){
+            //     Mail::to($newsletter->email)->send(new newslellerEmail());
+               
+            //  }
+           
+            return response()->json([
+                "status"=>1,
+                "message"=>"L'article a été ajouter avec succès",
+                "data"=>$article
+            ]);
+           
+        }
     }
 
     /**
@@ -53,7 +93,26 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'photo' => 'required|string',
+            'description' => 'required|string'
+        ]);
+
+        $article->titre= $request->titre;
+        $imageData = $request->photo;
+        $imageName = time() . '.jpeg';
+        file_put_contents(public_path('image/' . $imageName), $imageData);
+        $article->photo = "image/" . $imageName;
+        $article->description= $request->description;
+
+        if($article->update()){
+            return response()->json([
+                "status"=>1,
+                "message"=>"L'article a été modifier avec succès",
+                "data"=>$article
+            ]);
+        }
     }
 
     /**
@@ -61,6 +120,12 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        if($article->delete()){
+            return response()->json([
+                "status"=>1,
+                "message"=>"L'article a été supprimer avec succès",
+                "data"=>$article
+            ]);
+        }
     }
 }
