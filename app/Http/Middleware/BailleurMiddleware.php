@@ -31,7 +31,7 @@ class BailleurMiddleware
         // }
 
         // if (auth()->check() && auth()->user()->role === 'Bailleur') {
-            if (Auth::check() && Auth::user()->role === 'Bailleur') {
+        if (Auth::check() && Auth::user()->role === 'Bailleur') {
             return $next($request);
         } else {
             return response()->json([

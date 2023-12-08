@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -15,13 +16,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()) {
-
-            $user = auth()->user();
-
-            if ($user->role === 'Admin') {
-                return $next($request);
-            }
+        if (Auth::check() && Auth::user()->role === 'Admin') {
+            return $next($request);
         } else {
             return response()->json([
                 "message" => "vous n'êtes pas Connecté en tant que Admin"

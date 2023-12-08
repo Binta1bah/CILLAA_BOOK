@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\api\UserController;
+use Symfony\Component\HttpFoundation\Request;
 use App\Http\Controllers\api\ProjetController;
 use App\Http\Controllers\api\CategorieController;
 use App\Http\Controllers\api\InvertissementController;
