@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\CategorieController;
 use App\Http\Controllers\api\UserController;
 use GuzzleHttp\Middleware;
@@ -43,6 +44,12 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/ajouterCategorie', [CategorieController::class, 'store']);
     Route::put('/ModifierCategorie/{id}', [CategorieController::class, 'update']);
     Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
+
+    // CRUD ARTICLE
+    Route::get('/voirArticles', [ArticleController::class, 'index']);
+    Route::post('/ajouterArticle', [ArticleController::class, 'store']);
+    Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
+    Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
 });
 
 
