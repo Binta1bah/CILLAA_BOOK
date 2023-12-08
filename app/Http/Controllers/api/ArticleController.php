@@ -57,15 +57,12 @@ class ArticleController extends Controller
 
         if($article->save()){
              //Envoie Email aux abonnées du newsletters
-             $newsletters = NewsLetter::all();
-             foreach($newsletters as $newsletter){
-                Mail::to($newsletter->email)->send(new newslellerEmail());
-                // return back()->with('success', 'Ajout effectuée avec succes');
-             }
+            //  $newsletters = NewsLetter::all();
+            //  foreach($newsletters as $newsletter){
+            //     Mail::to($newsletter->email)->send(new newslellerEmail());
+               
+            //  }
            
-            
-
-
             return response()->json([
                 "status"=>1,
                 "message"=>"L'article a été ajouter avec succès",
