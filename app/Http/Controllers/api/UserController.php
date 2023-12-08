@@ -133,16 +133,17 @@ class UserController extends Controller
         }
 
         if (Auth::attempt($request->all())) {
+
             $user = Auth::user();
 
-            if ($user->role === "Bailleur") {
+            if ($user->role === "Bailleur" && $user->est_bloque == 0) {
                 $success =  $user->createToken('MyApp')->plainTextToken;
                 return response([
                     'message' => 'Vous êtes connecté en tant que bailleur',
                     'token' => $success,
                     'datas' => $user
                 ], 200);
-            } elseif ($user->role === "Porteur") {
+            } elseif ($user->role === "Porteur" && $user->est_bloque == 0) {
                 $success =  $user->createToken('MyApp')->plainTextToken;
                 return response([
                     'message' => 'Vous êtes connecté en tant que Porteur de projet',
@@ -156,6 +157,10 @@ class UserController extends Controller
                     'token' => $success,
                     'datas' => $user
                 ], 200);
+            } else {
+                return response()->json([
+                    "message" => "Votre compte est bloqué"
+                ]);
             }
         }
 
