@@ -61,4 +61,14 @@ class InvertissementController extends Controller
     {
         //
     }
+
+    public function accepterInvestissement(Invertissement $invertissement)
+    {
+
+
+    }
+    public function refuserInvestissement(Invertissement $invertissement)
+    {
+
+    }
 }

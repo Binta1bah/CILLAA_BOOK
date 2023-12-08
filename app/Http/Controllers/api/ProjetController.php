@@ -12,7 +12,7 @@ class ProjetController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
         //return Projet::with('User')->get();
         $projets  = Projet::all();
@@ -92,7 +92,7 @@ class ProjetController extends Controller
         /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Projet $projet)
+    public function destroy(Projet $projet): \Illuminate\Http\JsonResponse
     {
         $projet ->delete();
 

@@ -10,49 +10,63 @@ class CommentaireController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        //
+        $commentaires  = Commentaire::all();
+
+        return response()->json($commentaires );
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        //
+        $request->validate([
+            'nom' => 'required',
+            'email' => 'required',
+            'contenu' => 'required',
+            'article_id' => 'required|exists:articles,id'
+        ]);
+         $commentaire = Commentaire::create($request->all());
+        return response()->json(data: ['message' => 'Commentaire create successfully', 'commentaire' => $commentaire], status: 201);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Commentaire $commentaire)
+    public function show(Commentaire $commentaire): \Illuminate\Http\JsonResponse
     {
-        //
+        return response()->json($commentaire);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Commentaire $commentaire)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Commentaire $commentaire)
     {
-        //
+        //update avec validation
+        $request->validate([
+            'nom' => 'required',
+            'email' => 'required',
+            'contenu' => 'required',
+            'article_id' => 'required|exists:articles,id',
+        ]);
+
+        // On met à jour un projet existant
+        $commentaire->update($request->all());
+
+        return response()->json(['message' => 'Projet update successfully', 'commentaire' => $commentaire], 201);
+
     }
 
     /**
@@ -60,6 +74,8 @@ class CommentaireController extends Controller
      */
     public function destroy(Commentaire $commentaire)
     {
-        //
+        $commentaire ->delete();
+
+        return response()->json(['message' => 'Commentaire delete successfully', 'commentaire' => $commentaire]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\CommentaireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/inscription', [UserController::class, 'store']);
 
 //Routes de mes projects
+
 Route::apiResource('projets',\App\Http\Controllers\api\ProjetController::class);
+
+
+//Routes les commentaires
+Route::apiResource('commentaires', \App\Http\Controllers\api\CommentaireController::class);
