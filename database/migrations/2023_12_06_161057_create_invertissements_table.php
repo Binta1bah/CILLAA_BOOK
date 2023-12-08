@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Projet;
 use App\Models\Bailleur;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;

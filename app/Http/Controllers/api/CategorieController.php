@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\api;
-use Exception;
+
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,33 +13,23 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-     public function index(Request $request)
-{
-    $categorieId = $request->input('categorie_id');
-
-    if ($categorieId) {
-        $projets = Projet::where('categorie_id', $categorieId)->get();
-
+    public function index()
+    {
+        $categorie = Categorie::all();
+        $nombre = Categorie::all()->count();
         return response()->json([
-            'status_code' => 200,
-            'status_message' => 'Projets récupérés avec succès',
-            'projets' => $projets
-        ]);
-    } else {
-        return response()->json([
-            'status_code' => 400,
-            'status_message' => 'ID de catégorie manquant'
+            "statut" => 1,
+            "nombre" => $nombre,
+            "categorie" => $categorie
+
         ]);
     }
-}
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -47,12 +37,18 @@ class CategorieController extends Controller
      */
     public function store(CreateCtegorieRequest $request)
     {
-        // ici je vais créer un categorie
+        $request->validate([
+            'libelle' => 'required|string'
+        ]);
 
         $categorie = new Categorie();
         $categorie->libelle = $request->libelle;
-        $categorie->save();
-
+        if ($categorie->save()) {
+            return response()->json([
+                "statut" => 1,
+                "message" => "Categorie ajoutée"
+            ]);
+        }
     }
 
     /**
@@ -74,16 +70,35 @@ class CategorieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'libelle' => 'required|string'
+        ]);
+        $categorie = Categorie::findorFail($id);
+        $categorie->libelle = $request->libelle;
+        if ($categorie->save()) {
+            return response()->json([
+                "message" => "Modification effectuée"
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Modification non effectuée"
+            ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categorie $categorie)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $categorie = Categorie::findorFail($id);
+        if ($categorie->delete()) {
+            return response()->json([
+                "Statut" => 1,
+                "massage" => "Suppression effectuer"
+            ]);
+        }
     }
 }

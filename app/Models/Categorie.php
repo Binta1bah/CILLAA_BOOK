@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categorie extends Model
 {
+    protected $fillable = ['libelle'];
     use HasFactory;
 
-    protected $fillable = [
-        'libelle',
-    ];
-    public function projets() {
+    public function projets()
+    {
         return $this->hasMany(Projet::class);
     }
 }

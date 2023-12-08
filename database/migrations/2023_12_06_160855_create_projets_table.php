@@ -23,8 +23,9 @@ return new class extends Migration
             $table->string('echeance');
             $table->string('budget');
             $table->enum('etat', ['Disponible', 'Fiancé'])->default('Disponible');
-            $table->foreignIdFor(Categorie::class)->nullable()->constrained()->onDelete('cascade')->defaultValue(1);
-            $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade')->default(1);
+            $table->foreignIdFor(Categorie::class)->constrained()->onDelete('cascade');
+            // $table->enum('categorie', ['Agriculture', 'Education', 'Santé', 'Elevage', 'Informatique']);
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
