@@ -13,40 +13,25 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request){
 
-        try{
+     public function index(Request $request)
+{
+    $categorieId = $request->input('categorie_id');
 
-           $requette=Projet::query();
-        //    dd($request);
-           $perPage= 4;
-           $page=$request->input('page',1);
-           $recherche=$request->input('recherche');
-           
-           // on vérifie si l'utilisateur fais un recherche sur un titre 
-           if ($recherche) {
-               $requette->whereRaw("categories LIKE '%" .$recherche . "%'");
-               
-               
-           } 
-           // on compte le nonbre de resultat trouver sur la bases de donner
-           $total=$requette->count();  
-           $resultat = $requette->offset(($page - 1) * $perPage)->limit($perPage)->get();
-           
+    if ($categorieId) {
+        $projets = Projet::where('categorie_id', $categorieId)->get();
 
-           return response()->json(
-               [
-                   'status_code'=>200,
-                   'status_massage'=> 'les projet on etais récupérer',
-                   'current_page'=>$page,
-                   'Last_page'=>ceil($total / $perPage),
-                   // dd($resultat);
-                  'items'=>$resultat
-               ]);
-           
-        }catch(Exception $e){
-           response()->json($e);
-        }
+        return response()->json([
+            'status_code' => 200,
+            'status_message' => 'Projets récupérés avec succès',
+            'projets' => $projets
+        ]);
+    } else {
+        return response()->json([
+            'status_code' => 400,
+            'status_message' => 'ID de catégorie manquant'
+        ]);
+    }
 }
 
     /**

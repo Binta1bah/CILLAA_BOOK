@@ -15,7 +15,7 @@ class Invertissement extends Model
         'description',
         'status',
         'user_id',
-        'project_id'
+        'projet_id'
     ];
     public function User() {
         return $this->belongsTo(User::class);

@@ -5,14 +5,16 @@ use Exception;
 use App\Models\Projet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditeProjetRequest;
 use App\Http\Requests\CreateProjetRequest;
+use App\Models\Invertissement;
 
 class ProjetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request){
+    public function index(){
 
         try{
  return response()->json(
@@ -22,34 +24,6 @@ class ProjetController extends Controller
              'data'=> Projet::all()
     ]
     );
-
-
-        //    $requette=Projet::query();
-        //    $perPage= 2;
-        //    $page=$request->input('page',1);
-        //    $recherche=$request->input('recherche');
-           
-        //    // on vérifie si l'utilisateur fais un recherche sur un titre 
-        //    if ($recherche) {
-        //        $requette->whereRaw("titre LIKE '%" .$recherche . "%'");
-               
-               
-        //    } 
-        //    // on compte le nonbre de resultat trouver sur la bases de donner
-        //    $total=$requette->count();  
-        //    $resultat = $requette->offset(($page - 1) * $perPage)->limit($perPage)->get();
-           
-
-        //    return response()->json(
-        //        [
-        //            'status_code'=>200,
-        //            'status_massage'=> 'les article on etais récupérer',
-        //            'current_page'=>$page,
-        //            'Last_page'=>ceil($total / $perPage),
-        //            // dd($resultat);
-        //           'items'=>$resultat
-        //        ]);
-           
         }catch(Exception $e){
            response()->json($e);
         }
@@ -65,7 +39,7 @@ class ProjetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateProjetRequest $request)
+    public function store( $request)
     {
         // ici on va créer un projet
         $projet=new Projet();
@@ -97,9 +71,10 @@ class ProjetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Projet $projet)
+    public function edit(EditeProjetRequest $request,  Projet $projet)
     {
-        //
+        // ici on va selection et proposer un investissement
+                 
     }
 
     /**

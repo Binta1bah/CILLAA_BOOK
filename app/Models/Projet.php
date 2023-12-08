@@ -16,7 +16,7 @@ class Projet extends Model
         'description',
         'echeance',
         'budget',
-        'categori_id',
+        'categorie_id',
         'user_id'
         
     ];
