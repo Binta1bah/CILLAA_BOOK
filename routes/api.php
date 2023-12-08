@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\ArticleController;
-use App\Http\Controllers\api\CategorieController;
+
 use App\Http\Controllers\api\NewsLetterController;
 use App\Http\Controllers\api\UserController;
 use App\Models\NewsLetter;
@@ -10,7 +10,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 
-use App\Http\Controllers\api\UserController;
+
 use Symfony\Component\HttpFoundation\Request;
 use App\Http\Controllers\api\ProjetController;
 use App\Http\Controllers\api\CategorieController;
@@ -64,13 +64,12 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
     Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
 
-     // CRUD NewsLetter
-     Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
-     Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
-     Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
+    // CRUD NewsLetter
+    Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
+    Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
 });
 
-
+Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
 Route::post('/inscription', [UserController::class, 'store']);
 
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
