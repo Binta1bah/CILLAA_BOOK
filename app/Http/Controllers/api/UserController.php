@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Faker\Core\File;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -14,60 +15,120 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function DashboardPorteur()
     {
-        //
+        $user= auth()->user();
+        // dd($user);
+       return "je suis porteur";
+    }
+
+    public function DashboardBailleur()
+    {
+        $user= auth()->user();
+        // dd($user);
+       return "je suis Bailleur";
+    }
+
+    public function DashboardAdmin()
+    {
+        $user= auth()->user();
+        // dd($user);
+       return "je suis Admin";
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required'
+    //     ]);
+
+    //     $user =  User::where('email', $request->email)->first();
+
+    //     if ($user) {
+    //         if (Hash::check($request->password, $user->password)) {
+    //             if ($user->role === 'Bailleur') {
+
+    //                 $token = $user->createToken('auth_token')->plainTextToken;
+    //                 return response()->json([
+    //                     "statut" => 1,
+    //                     "massage" => "Vous êtes connecté en tant que Bailleur",
+    //                     "token" => $token
+    //                 ]);
+    //             } elseif ($user->role === 'Porteur') {
+    //                 $token = $user->createToken('auth_token')->plainTextToken;
+    //                 return response()->json([
+    //                     "statut" => 1,
+    //                     "massage" => "Vous êtes connecté en tant que Porteur de projet",
+    //                     "token" => $token
+    //                 ]);
+    //             } else {
+    //                 $token = $user->createToken('auth_token')->plainTextToken;
+    //                 return response()->json([
+    //                     "statut" => 1,
+    //                     "massage" => "Vous êtes connecté en tant que Admin",
+    //                     "token" => $token
+    //                 ]);
+    //             }
+    //         } else {
+    //             return response()->json([
+    //                 "statut" => 0,
+    //                 "massage" => "Mot de passe Incorrect"
+    //             ]);
+    //         }
+    //     } else {
+    //         return response()->json([
+    //             "massage" => "Email Introuvable"
+    //         ]);
+    //     }
+    // }
+
     public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        $user =  User::where('email', $request->email)->first();
+    $credentials = $request->only('email', 'password');
 
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                if ($user->role === 'Bailleur') {
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        // $token = $user->createToken('auth_token')->plainTextToken;
 
-                    $token = $user->createToken('auth_token')->plainTextToken;
-                    return response()->json([
-                        "statut" => 1,
-                        "massage" => "Vous êtes connecté en tant que Bailleur",
-                        "token" => $token
-                    ]);
-                } elseif ($user->role === 'Porteur') {
-                    $token = $user->createToken('auth_token')->plainTextToken;
-                    return response()->json([
-                        "statut" => 1,
-                        "massage" => "Vous êtes connecté en tant que Porteur de projet",
-                        "token" => $token
-                    ]);
-                } else {
-                    $token = $user->createToken('auth_token')->plainTextToken;
-                    return response()->json([
-                        "statut" => 1,
-                        "massage" => "Vous êtes connecté en tant que Admin",
-                        "token" => $token
-                    ]);
-                }
-            } else {
-                return response()->json([
-                    "statut" => 0,
-                    "massage" => "Mot de passe Incorrect"
-                ]);
-            }
-        } else {
+        if ($user->role === 'Bailleur') {
+            $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
-                "massage" => "Email Introuvable"
+                "status" => 1,
+                "message" => "Vous êtes connecté en tant que Bailleur",
+                "token" => $token
+            ]);
+        } elseif ($user->role === 'Porteur') {
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return response()->json([
+                "status" => 1,
+                "message" => "Vous êtes connecté en tant que Porteur de projet",
+                "token" => $token
+            ]);
+        } else {
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return response()->json([
+                "status" => 1,
+                "message" => "Vous êtes connecté en tant que Admin",
+                "token" => $token
             ]);
         }
+    } else {
+        return response()->json([
+            "status" => 0,
+            "message" => "Identifiants incorrects"
+        ], 401); 
     }
+}
+
 
     /**
      * Store a newly created resource in storage.
