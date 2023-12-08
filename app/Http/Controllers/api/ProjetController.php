@@ -27,7 +27,7 @@ class ProjetController extends Controller
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         //On crée un nouvel projet
-        $projet = new Projet();
+        /*$projet = new Projet();
         $projet ->nom = $request->nom;
         $projet ->image = $request->image;
         $projet ->objectif = $request->objectif;
@@ -39,7 +39,21 @@ class ProjetController extends Controller
         $projet->user_id = $request->user_id;
         $projet->save();
         return response()->json(['message' => 'Project create successfully', 'projet' => $projet], 201);
+        */
+        $request->validate([
+            'nom' => 'required',
+            'image' => 'required',
+            'objectif' => 'required',
+            'description' => 'required',
+            'echeance' => 'required',
+            'budget' => 'required|numeric',
+            'etat' => 'in:Disponible,Financé',
+            'categorie_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
 
+        $projet = Projet::create($request->all());
+        return response()->json(['message' => 'Projet create successfully', 'projet' => $projet], 201);
     }
 
 
