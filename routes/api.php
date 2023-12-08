@@ -73,3 +73,24 @@ Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
 Route::post('/inscription', [UserController::class, 'store']);
 
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
+
+
+// route pour Enregistrer un utilisateur
+Route::post('/register', [UserController::class,'register']);
+// route pour connecter un utilisateur
+ Route::post('/login', [UserController::class,'login']);
+
+// route pour lister les projet 
+Route::get('/projet', [ProjetController::class, 'index']);
+// // route pour rechercher les projet par categorie
+Route::get('/categorieprojet',[CategorieController::class,'index']);
+
+// route pour selectionner un projet et faire une proposition
+Route::post('/investissement',[InvertissementController::class,'store']);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request){
+        return $request->user();
+    });
+});

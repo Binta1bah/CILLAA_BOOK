@@ -32,38 +32,50 @@ class InvertissementController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(EditeProjetRequest $request,Projet $projet)
+  public function store(EditeProjetRequest $request,Projet $projet)
     {
-        //
-        $investissement=new Invertissement();
-        $investissement->montant=$request->montant;
-        $investissement->description=$request->description;
-        $investissement->projet_id=$request->projet_id;
-        $investissement->user_id=$request->user_id;
-        $userId=$projet->user_id;
+         try{
+        $investissement = new Invertissement();
+        $investissement->montant = $request->montant;
+        $investissement->description = $request->description;
+        $investissement->projet_id = $request->projet_id;
+        $investissement->user_id = $request->user_id;
         if ($investissement->save()) {
-            // Récupérer l'instance de l'investissement avec l'utilisateur chargé
-            $investissementAvecUtilisateur = Invertissement::with('user')->find($investissement->id);
-        
-            // Récupérer l'utilisateur associé à l'investissement
-            $user = $investissementAvecUtilisateur->user;
-        
-            if ($user) {
-                $user->notify(new InvestissementNotification());
-            
-                return response()->json([
-                    'status_code' => 200,
-                    'status_message' => 'Votre proposition a été enregistrée',
-                    'data' => $investissement
-                ]);
-            } else {
-                return response()->json([
-                    'status_code' => 404,
-                    'status_message' => 'Utilisateur non trouvé'
-                ]);
-            }  
-
-    }}
-
+            // on Récupére le projet associé à l'investissement
+            $projet = Projet::find($request->projet_id);
+                    if ($projet) {
+                        // on Récupére l'utilisateur associé au projet
+                        $user = $projet->user;
+                            if ($user) {
+                                // puis on Notifie l'utilisateur qui a créé le projet
+                                $user->notify(new InvestissementNotification());
+                                        return response()->json([
+                                            'status_code' => 200,
+                                            'status_message' => 'Votre proposition a été enregistrée',
+                                            'data' => $investissement
+                                        ]);
+                                    } else {
+                                        return response()->json([
+                                            'status_code' => 404,
+                                            'status_message' => 'Utilisateur du projet non trouvé'
+                                        ]);
+                                    }
+                                            } else {
+                                                return response()->json([
+                                                    'status_code' => 404,
+                                                    'status_message' => 'Projet non trouvé'
+                                                ]);
+                                            }
+                                            } else {
+                                                return response()->json([
+                                                    'status_code' => 500,
+                                                    'status_message' => 'Erreur lors de l\'enregistrement de la proposition'
+                                                ]);
+                                            }
+         }catch(Exception $e){
+            return response()->json($e);
+         }
+    }
     /**
      * Display the specified resource.
      */
