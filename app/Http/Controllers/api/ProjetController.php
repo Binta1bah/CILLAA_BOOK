@@ -70,24 +70,26 @@ class ProjetController extends Controller
      */
     public function update(Request $request, Projet $projet): \Illuminate\Http\JsonResponse
     {
+        //update avec validation
+        $request->validate([
+            'nom' => 'required',
+            'image' => 'required',
+            'objectif' => 'required',
+            'description' => 'required',
+            'echeance' => 'required',
+            'budget' => 'required|numeric',
+            'etat' => 'in:Disponible,Financé',
+            'categorie_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
 
-        //On met à jour  un  projet existant
-            $projet = new Projet();
-            $projet ->nom = $request->nom;
-            $projet ->image = $request->image;
-            $projet ->objectif = $request->objectif;
-            $projet ->description = $request->description;
-            $projet->echeance = $request->echeance;
-            $projet->budget = $request->budget;
-            $projet->etat = $request->etat;
-            $projet->categorie_id = $request->categorie_id;
-            $projet->user_id = $request->user_id;
-            $projet->update();
-            return response()->json(['message' => 'Project update  successfully', 'projet' => $projet], 201);
+        // On met à jour un projet existant
+        $projet->update($request->all());
 
+        return response()->json(['message' => 'Projet update successfully', 'projet' => $projet], 201);
     }
 
-    /**
+        /**
      * Remove the specified resource from storage.
      */
     public function destroy(Projet $projet)
