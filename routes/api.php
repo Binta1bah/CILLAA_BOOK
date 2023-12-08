@@ -19,6 +19,7 @@ use App\Http\Controllers\api\InvertissementController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// modification
 
 // route pour Enregistrer un utilisateur
 Route::post('/register', [UserController::class,'register']);
@@ -33,10 +34,6 @@ Route::get('/categorieprojet',[CategorieController::class,'index']);
 // route pour selectionner un projet et faire une proposition
 Route::post('/investissement',[InvertissementController::class,'store']);
 
-// // route pour créer un projet
-// Route::post('projets/create',[ProjetController::class,'store']);
-// // route pour créer un cacégorie
-// Route::post('categorie/create',[CategorieController::class,'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request){
