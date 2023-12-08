@@ -5,6 +5,10 @@ namespace App\Http\Controllers\api;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\newslellerEmail;
+use App\Models\NewsLetter;
+use App\Notifications\InfoNewsArticle;
+use Illuminate\Support\Facades\Mail;
 
 class ArticleController extends Controller
 {
@@ -52,11 +56,22 @@ class ArticleController extends Controller
         $article->description= $request->description;
 
         if($article->save()){
+             //Envoie Email aux abonnées du newsletters
+             $newsletters = NewsLetter::all();
+             foreach($newsletters as $newsletter){
+                Mail::to($newsletter->email)->send(new newslellerEmail());
+                // return back()->with('success', 'Ajout effectuée avec succes');
+             }
+           
+            
+
+
             return response()->json([
                 "status"=>1,
                 "message"=>"L'article a été ajouter avec succès",
                 "data"=>$article
             ]);
+           
         }
     }
 

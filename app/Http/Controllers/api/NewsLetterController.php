@@ -12,7 +12,15 @@ class NewsLetterController extends Controller
      */
     public function index()
     {
-        //
+        $newsletters= NewsLetter::all();
+        $total= $newsletters->count();
+
+        return response()->json([
+            "status"=>1,
+            "message"=> "voici vos articles",
+            "Total"=>$total,
+            "data"=>$newsletters
+        ]);
     }
 
     /**
@@ -28,7 +36,19 @@ class NewsLetterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique:news_letters,email|max:255'
+        ]);
+
+        $newsletter= new NewsLetter();
+        $newsletter->email= $request->email;
+        if($newsletter->save()){
+            return response()->json([
+                "status"=>1,
+                "message"=> "Votre Email a ete Envoyer",
+            ]);
+        }
+      
     }
 
     /**
@@ -58,8 +78,16 @@ class NewsLetterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(NewsLetter $newsLetter)
-    {
-        //
+   
+
+    public function supprimer($id){
+        $newsLetter= NewsLetter::findOrFail($id);
+
+        if($newsLetter->delete()){
+            return response()->json([
+                "status"=>1,
+                "message"=> "Email supprimer avec succès"
+            ]);
+        }
     }
 }

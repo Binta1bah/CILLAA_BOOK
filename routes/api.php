@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\CategorieController;
+use App\Http\Controllers\api\NewsLetterController;
 use App\Http\Controllers\api\UserController;
+use App\Models\NewsLetter;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +52,11 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/ajouterArticle', [ArticleController::class, 'store']);
     Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
     Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
+
+     // CRUD NewsLetter
+     Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
+     Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
+     Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
 });
 
 
