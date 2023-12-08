@@ -19,7 +19,7 @@ use App\Http\Controllers\api\InvertissementController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// modification
+
 
 // route pour Enregistrer un utilisateur
 Route::post('/register', [UserController::class,'register']);
