@@ -17,6 +17,31 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function listePorteur()
+    {
+        $porteurs = User::where('role', 'Porteur')->get();
+        $nombre = User::where('role', 'Porteur')->count();
+        return response()->json([
+            "statut" => 1,
+            "nombre" => $nombre,
+            "Porteurs" => $porteurs
+        ]);
+    }
+
+
+    public function listeBailleur()
+    {
+        $bailleurs = User::where('role', 'Bailleur')->get();
+        $nombre = User::where('role', 'Bailleur')->count();
+        return response()->json([
+            "statut" => 1,
+            "nombre" => $nombre,
+            "Porteurs" => $bailleurs
+        ]);
+    }
+
+
     public function dashBordBailleur()
     {
         $user = auth()->user();
@@ -191,15 +216,59 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findorFail($id);
+        if ($user->role === "Bailleur") {
+            return response()->json([
+                "statut" => 1,
+                "message" => "information du bailleur",
+                "datas" => $user
+            ]);
+        } elseif ($user->role === "Porteur") {
+            return response()->json([
+                "statut" => 1,
+                "message" => "information du Porteur",
+                "datas" => $user
+            ]);
+        } elseif ($user->role === "Admin") {
+            return response()->json([
+                "statut" => 1,
+                "message" => "information du Admin",
+                "datas" => $user
+            ]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function bloquerUser(string $id)
     {
-        //
+        $user = User::findorFail($id);
+        if ($user->role == "Bailleir" || $user->role == "Porteur") {
+
+            $user->est_bloque = 1;
+            $user->save();
+
+            return response()->json([
+                "statut" => 1,
+                "Message" => "user bloqué"
+            ]);
+        }
+    }
+
+    public function debloquerUser(string $id)
+    {
+        $user = User::findorFail($id);
+        if ($user->role == "Bailleir" || $user->role == "Porteur") {
+
+            $user->est_bloque = 0;
+            $user->save();
+
+            return response()->json([
+                "statut" => 1,
+                "Message" => "user debloqué"
+            ]);
+        }
     }
 
     /**
@@ -207,7 +276,47 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user =  User::findorFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:6',
+            'image' => 'required|string',
+            'description' => 'nullable|string',
+            'telephone' => 'required|string|max:255',
+            'role' => 'required|in:Porteur,Bailleur,Admin',
+            'organisme' => 'nullable|in:ONG,Entreprise,Particulier',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->description = $request->description;
+        $user->telephone = $request->telephone;
+        $user->role = $request->role;
+        $user->organisme = $request->organisme;
+
+        if ($request->hasFile('image')) {
+            $imageData = $request->image;
+            $imageName = time() . '.jpeg';
+            file_put_contents(public_path('image/' . $imageName), $imageData);
+            $user->image = "image/" . $imageName;
+        }
+
+        $userAuth = Auth()->user();
+        if ($userAuth->id == $user->id) {
+            $user->save();
+            return response()->json([
+                "statut" => 1,
+                "message" => "Modification effectuée",
+                "datas" => $user
+            ]);
+        } else {
+            return response()->json([
+                "message" => "c'est pas pour toi"
+            ]);
+        }
     }
 
     /**

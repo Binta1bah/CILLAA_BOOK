@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/info/{id}', [UserController::class, 'show']);
+    Route::put('/modifierProfil/{id}', [UserController::class, 'update']);
 });
 
 // Les routes du Bailleur
@@ -40,9 +42,18 @@ Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
 // Les routes de l'admin
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/dashboardAdmin', [UserController::class, 'dashBordAdmin']);
+    //categorie
     Route::post('/ajouterCategorie', [CategorieController::class, 'store']);
+    Route::get('/listeCtagorie', [CategorieController::class, 'index']);
     Route::put('/ModifierCategorie/{id}', [CategorieController::class, 'update']);
     Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
+    //porteurs
+    Route::get('/listePorteur', [UserController::class, 'listePorteur']);
+    //bailleur
+    Route::get('/listeBailleur', [UserController::class, 'listeBailleur']);
+    // user
+    Route::put('/bloquerUser/{id}', [UserController::class, 'bloquerUser']);
+    Route::put('/debloquerUser/{id}', [UserController::class, 'debloquerUser']);
 });
 
 

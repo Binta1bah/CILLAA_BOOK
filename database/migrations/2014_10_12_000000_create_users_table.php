@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->enum('role', ['Porteur', 'Bailleur', 'Admin']);
             $table->enum('organisme', ['ONG', 'Entreprise', 'Particulier'])->nullable();
+            $table->boolean('est_bloque?')->nullable()->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

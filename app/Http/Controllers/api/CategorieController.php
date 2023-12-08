@@ -13,7 +13,14 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categorie = Categorie::all();
+        $nombre = Categorie::all()->count();
+        return response()->json([
+            "statut" => 1,
+            "nombre" => $nombre,
+            "categorie" => $categorie
+
+        ]);
     }
 
     /**
@@ -63,6 +70,9 @@ class CategorieController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'libelle' => 'required|string'
+        ]);
         $categorie = Categorie::findorFail($id);
         $categorie->libelle = $request->libelle;
         if ($categorie->save()) {
@@ -82,7 +92,7 @@ class CategorieController extends Controller
     public function destroy(Request $request, string $id)
     {
         $categorie = Categorie::findorFail($id);
-        if($categorie->delete()) {
+        if ($categorie->delete()) {
             return response()->json([
                 "Statut" => 1,
                 "massage" => "Suppression effectuer"
