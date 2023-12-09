@@ -37,4 +37,4 @@ Route::apiResource('commentaires', CommentaireController::class);
 // Accepter
 Route::put('/invertissements/accepter/{invertissement}', [InvertissementController::class, 'accepterInvertissement']);
 // Refuser
-Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvestissement']);
+Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvertissement']);
