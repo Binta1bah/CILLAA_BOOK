@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\api\CommentaireController;
+
 use App\Http\Controllers\api\ArticleController;
 
 use App\Http\Controllers\api\NewsLetterController;
@@ -77,6 +79,21 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
 
 Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
 Route::post('/inscription', [UserController::class, 'store']);
+
+//Routes de mes projects
+
+Route::apiResource('projets', ProjetController::class);
+
+
+//Routes les commentaires
+Route::apiResource('commentaires', CommentaireController::class);
+
+
+// Routes investissements
+// Accepter
+Route::put('/invertissements/accepter/{invertissement}', [InvertissementController::class, 'accepterInvertissement']);
+// Refuser
+Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvertissement']);
 
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
 

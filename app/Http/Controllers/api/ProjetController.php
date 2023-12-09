@@ -1,95 +1,88 @@
 <?php
 
 namespace App\Http\Controllers\api;
-use Exception;
+use App\Models\User;
 use App\Models\Projet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EditeProjetRequest;
-use App\Http\Requests\CreateProjetRequest;
-use App\Models\Invertissement;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class ProjetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(){
-
-        try{
- return response()->json(
-    [
-        'status_code'=> 200,
-        'status_message'=> 'les projet on été recupérer',
-             'data'=> Projet::all()
-    ]
-    );
-        }catch(Exception $e){
-           response()->json($e);
-        }
-}
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        //
+        //return Projet::with('User')->get();
+        $projets  = Projet::all();
+
+        return response()->json($projets);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store( $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        // ici on va créer un projet
-        $projet=new Projet();
-        $projet->nom= $request->nom;
-        $projet->objectif= $request->objectif;
-        $projet->description= $request->description;
-        $projet->echeanche= $request->echeance;
-        $projet->budget= $request->budget;
 
-        $projet->user_id= auth()->user()->id;
-        $projet->save();
-        return response()->json(
-           [
-               'status_code'=>200,
-               'status_massage'=> 'projet créer avec succéss',
-               'data'=>$projet
-           ]);
+        $request->validate([
+            'nom' => 'required',
+            'image' => 'required',
+            'objectif' => 'required',
+            'description' => 'required',
+            'echeance' => 'required',
+            'budget' => 'required|numeric',
+            'etat' => 'in:Disponible,Financé',
+            'categorie_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
 
+        $projet = Projet::create($request->all());
+        return response()->json(['message' => 'Projet create successfully', 'projet' => $projet], 201);
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(Projet $projet)
+    public function show(Projet $projet): \Illuminate\Http\JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(EditeProjetRequest $request,  Projet $projet)
-    {
-        // ici on va selection et proposer un investissement
-                 
+        return response()->json($projet);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Projet $projet)
+    public function update(Request $request, Projet $projet): \Illuminate\Http\JsonResponse
     {
-        //
+        //update avec validation
+        $request->validate([
+            'nom' => 'required',
+            'image' => 'required',
+            'objectif' => 'required',
+            'description' => 'required',
+            'echeance' => 'required',
+            'budget' => 'required|numeric',
+            'etat' => 'in:Disponible,Financé',
+            'categorie_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        // On met à jour un projet existant
+        $projet->update($request->all());
+
+        return response()->json(['message' => 'Projet update successfully', 'projet' => $projet], 201);
     }
 
-    /**
+        /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Projet $projet)
+    public function destroy(Projet $projet): \Illuminate\Http\JsonResponse
     {
-        //
+        $projet ->delete();
+
+        return response()->json();
     }
 }

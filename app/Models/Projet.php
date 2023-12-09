@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static create(array $all)
+ */
 class Projet extends Model
 {
     use HasFactory;
@@ -16,9 +19,9 @@ class Projet extends Model
         'description',
         'echeance',
         'budget',
+        'etat',
         'categorie_id',
-        'user_id'
-        
+        'user_id',
     ];
 
     public function user()

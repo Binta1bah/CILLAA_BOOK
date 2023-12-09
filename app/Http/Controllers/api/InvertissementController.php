@@ -182,16 +182,8 @@ class InvertissementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Invertissement $invertissement)
     {
-        $user = auth()->user();
-        $investissement = Invertissement::findorFail($id);
-        if ($investissement->user_id == $user->id) {
-            if ($investissement->delete()) {
-                return response()->json([
-                    "message" => "Suppression effectuer"
-                ]);
-            }
-        }
+        //
     }
 }
