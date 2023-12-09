@@ -17,10 +17,14 @@ class Invertissement extends Model
         'user_id',
         'projet_id'
     ];
-    public function User() {
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-   
-
+    public function projet()
+    {
+        return $this->belongsTo(Projet::class);
+    }
 }

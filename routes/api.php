@@ -40,12 +40,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Les routes du Bailleur
 Route::group(['middleware' => ['auth:sanctum', 'bailleur']], function () {
     Route::get('/dashboardBailleur', [UserController::class, 'dashBordBailleur']);
+    Route::post('/investissement/{projet}', [InvertissementController::class, 'store']);
+    Route::get('/investissement/liste', [InvertissementController::class, 'index']);
+    Route::get('/investissement/{id}', [InvertissementController::class, 'show']);
+    Route::delete('/supprimer/investissement/{id}', [InvertissementController::class, 'destroy']);
 });
 
 
 // Les routes du porteur de projet
 Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
     Route::get('/dashboardPorteur', [UserController::class, 'dashBordPorteur']);
+    Route::put('/accepterProposition/{id}', [InvertissementController::class, 'valider']);
+    Route::put('/refuserProposition/{id}', [InvertissementController::class, 'refuser']);
 });
 
 
@@ -75,22 +81,18 @@ Route::post('/inscription', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
 
 
-// route pour Enregistrer un utilisateur
-Route::post('/register', [UserController::class,'register']);
-// route pour connecter un utilisateur
- Route::post('/login', [UserController::class,'login']);
 
-// route pour lister les projet 
-Route::get('/projet', [ProjetController::class, 'index']);
+// // route pour lister les projet 
+// Route::get('/projet', [ProjetController::class, 'index']);
 // // route pour rechercher les projet par categorie
-Route::get('/categorieprojet',[CategorieController::class,'index']);
+// Route::get('/categorieprojet',[CategorieController::class,'index']);
 
 // route pour selectionner un projet et faire une proposition
-Route::post('/investissement',[InvertissementController::class,'store']);
 
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request){
-        return $request->user();
-    });
-});
+
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('/user', function (Request $request){
+//         return $request->user();
+//     });
+// });

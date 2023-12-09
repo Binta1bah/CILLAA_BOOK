@@ -26,8 +26,8 @@ class EditeProjetRequest extends FormRequest
         return [
             'montant'=>'required',
             'description'=>'required',
-            'user_id'=>'required',
-            'projet_id'=>'required'
+            // 'user_id'=>'required',
+            // 'projet_id'=>'required'
         ];
     }
 
