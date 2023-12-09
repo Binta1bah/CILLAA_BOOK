@@ -15,11 +15,23 @@ use App\Http\Requests\CreateProjetRequest;
 use App\Mail\InvestissementMail;
 use App\Mail\PropositionAcceptee;
 use App\Notifications\InvestissementNotification;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(title="EndPoint de Invertissement ", version="0.1")
+ */
 class InvertissementController extends Controller
 {
     /**
      * Display a listing of the resource.
+     */
+
+      /**
+     * @OA\Get(
+     *     path="/api/investissement/liste",
+     *     summary= "Cette route permet de lister les investissement d'un bailleur donné",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function index()
     {
@@ -43,6 +55,13 @@ class InvertissementController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     */
+     /**
+     * @OA\Post(
+     *     path="/api/investissement/{projet}",
+     *     summary= "Cette route permet d'ajouter un investissement",
+     *     @OA\Response(response="201", description="Investissement Créer avec succès")
+     * )
      */
     public function store(EditeProjetRequest $request, string $id)
 
@@ -77,6 +96,14 @@ class InvertissementController extends Controller
     /**
      * Display the specified resource.
      */
+
+        /**
+     * @OA\Get(
+     *     path="/api/investissement/{id}",
+     *     summary= "Cette route permet de consulter le detail d'un investissement",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
     public function show(string $id)
     {
 
@@ -101,6 +128,13 @@ class InvertissementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+         /**
+     * @OA\Put(
+     *     path="/api/refuserProposition/{id}",
+     *     summary= "Cette route permet à un porteur de projet de refuser un investissement",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
     public function refuser(string $id)
     {
 
@@ -120,6 +154,13 @@ class InvertissementController extends Controller
         }
     }
 
+       /**
+     * @OA\Put(
+     *     path="/api/accepterProposition/{id}",
+     *     summary= "Cette route permet à un porteur de projet d'accepter un investissement",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
     public function valider(string $id)
     {
         $investissement = Invertissement::findOrFail($id);
@@ -149,6 +190,14 @@ class InvertissementController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * /supprimer/investissement/{id}
+     */
+         /**
+     * @OA\Delete(
+     *     path="/api/supprimer/investissement/{id}",
+     *     summary= "Cette route permet de supprimer un investissement specifique",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function destroy(string $id)
     {

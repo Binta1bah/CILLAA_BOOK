@@ -7,11 +7,22 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCtegorieRequest;
 use App\Models\Projet;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(title="EndPoint de Categorie ", version="0.1")
+ */
 class CategorieController extends Controller
 {
     /**
      * Display a listing of the resource.
+     */
+    /**
+     * @OA\Get(
+     *     path="/api/listeCtagorie",
+     *     summary= "Lister les categories et afficher leur nombre",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function index()
     {
@@ -35,6 +46,15 @@ class CategorieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    /**
+     * @OA\Post(
+     *     path="/api/ajouterCategorie",
+     *     summary= "Cette route permet d'ajouter une categorie",
+     *     @OA\Response(response="201", description="Enregistrement Effectué avec succès")
+     * )
+     */
+
     public function store(CreateCtegorieRequest $request)
     {
         $request->validate([
@@ -70,6 +90,13 @@ class CategorieController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * @OA\Put(
+     *     path="/api/ModifierCategorie/{id}",
+     *     summary= "Cette route permet de modifier une categorie",
+     *     @OA\Response(response="200", description="Succes")
+     * )
+     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -90,6 +117,14 @@ class CategorieController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     */
+
+    /**
+     * @OA\Delete(
+     *     path="/api/SupprimerCategorie/{id}",
+     *     summary= "Cette route permet de supprimer une categorie",
+     *     @OA\Response(response="200", description="Succes")
+     * )
      */
     public function destroy(Request $request, string $id)
     {
