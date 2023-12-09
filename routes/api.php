@@ -80,12 +80,18 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     // CRUD NewsLetter
     Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
     Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
+
+    //users
+    Route::get('/listePorteurs', [UserController::class, 'listePorteur']);
+    Route::get('/listeBailleurs', [UserController::class, 'listeBailleur']);
+    Route::post('/bloquerUser{id}', [UserController::class, 'bloquerUser']);
+    Route::post('/debloquerUser{id}', [UserController::class, 'debloquerUser']);
 });
 
 Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
 Route::post('/inscription', [UserController::class, 'store']);
 Route::get('/voirArticles', [ArticleController::class, 'index']);
-Route::get('/detainArticle/{article}', [ArticleController::class, 'show']);
+Route::get('/detailArticle/{article}', [ArticleController::class, 'show']);
 //Routes de mes projects
 
 // Route::apiResource('projets', ProjetController::class);
@@ -98,7 +104,7 @@ Route::get('/projets/{projet}', [ProjetController::class, 'show']);
 // Route::apiResource('commentaires', CommentaireController::class);
 Route::get('/commentaires', [CommentaireController::class, 'index']);
 Route::get('/commentaires/{commentaire}', [CommentaireController::class, 'show']);
-Route::post('/commentaires', [CommentaireController::class, 'store']);
+Route::post('/ajouter/commentaires', [CommentaireController::class, 'store']);
 // Route::put('/commentaires/{commentaire}', [CommentaireController::class, 'update']);
 
 

@@ -10,12 +10,21 @@ use App\Models\Commentaire;
 use App\Models\NewsLetter;
 use App\Notifications\InfoNewsArticle;
 use Illuminate\Support\Facades\Mail;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(title="endPoind de article", version="0.1")
+ */
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/voirArticle",
+     *     summary="liste de tout les articles et afficher le nombre d'article",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
+
     public function index()
     {
         $article = Article::all();
@@ -38,7 +47,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/ajouterArticle",
+     *     summary="ajouter un article",
+     *     @OA\Response(response="201", description="enregistrer avec succes")
+     * )
      */
     public function store(Request $request)
     {
@@ -75,6 +88,14 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
+
+    /**
+     * @OA\get(
+     *     path="/api/detailArticle/{article}",
+     *     summary="details d'un article",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
     public function show(Article $article)
     {
         $commentaires = Commentaire::where('article_id', $article->id)->get();
@@ -97,6 +118,15 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    /**
+     * @OA\put(
+     *     path="/api/modifierArticle/{article}",
+     *     summary="modifier un article",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
     public function update(Request $request, Article $article)
     {
         $request->validate([
@@ -127,6 +157,14 @@ class ArticleController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     */
+
+    /**
+     * @OA\delete(
+     *     path="/api/supprimerArticle/{article}",
+     *     summary="supprimer un article",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function destroy(Article $article)
     {
