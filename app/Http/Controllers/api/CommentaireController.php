@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 use App\Models\Commentaire;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,7 +11,7 @@ class CommentaireController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): JsonResponse
     {
         $commentaires  = Commentaire::all();
 
@@ -26,7 +27,7 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'nom' => 'required',
@@ -42,7 +43,7 @@ class CommentaireController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Commentaire $commentaire): \Illuminate\Http\JsonResponse
+    public function show(Commentaire $commentaire): JsonResponse
     {
         return response()->json($commentaire);
 
@@ -52,7 +53,7 @@ class CommentaireController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Commentaire $commentaire)
+    public function update(Request $request, Commentaire $commentaire): JsonResponse
     {
         //update avec validation
         $request->validate([
@@ -72,7 +73,7 @@ class CommentaireController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Commentaire $commentaire)
+    public function destroy(Commentaire $commentaire): JsonResponse
     {
         $commentaire ->delete();
 

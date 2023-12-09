@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\CommentaireController;
+use App\Http\Controllers\api\InvertissementController;
+use App\Http\Controllers\api\ProjetController;
+use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +26,15 @@ Route::post('/inscription', [UserController::class, 'store']);
 
 //Routes de mes projects
 
-Route::apiResource('projets',\App\Http\Controllers\api\ProjetController::class);
+Route::apiResource('projets', ProjetController::class);
 
 
 //Routes les commentaires
-Route::apiResource('commentaires', \App\Http\Controllers\api\CommentaireController::class);
+Route::apiResource('commentaires', CommentaireController::class);
+
+
+// Routes investissements
+// Accepter
+Route::put('/invertissements/accepter/{invertissement}', [InvertissementController::class, 'accepterInvertissement']);
+// Refuser
+Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvestissement']);
