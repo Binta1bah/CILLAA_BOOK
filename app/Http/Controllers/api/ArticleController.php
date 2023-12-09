@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\newslellerEmail;
+use App\Models\Commentaire;
 use App\Models\NewsLetter;
 use App\Notifications\InfoNewsArticle;
 use Illuminate\Support\Facades\Mail;
@@ -57,12 +58,11 @@ class ArticleController extends Controller
 
         if ($article->save()) {
             // Envoie Email aux abonnées du newsletters
-            
-             $newsletters = NewsLetter::all();
-             foreach($newsletters as $newsletter){
-                Mail::to($newsletter->email)->send(new newslellerEmail());
 
-             }
+            $newsletters = NewsLetter::all();
+            foreach ($newsletters as $newsletter) {
+                Mail::to($newsletter->email)->send(new newslellerEmail());
+            }
 
             return response()->json([
                 "status" => 1,
@@ -77,7 +77,13 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        $commentaires = Commentaire::where('article_id', $article->id)->get();
+
+        return response()->json([
+            "message" => "Les Articles",
+            "articles" => $article,
+            "commentaire" => $commentaires
+        ]);
     }
 
     /**

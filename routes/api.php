@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
 Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
 Route::post('/inscription', [UserController::class, 'store']);
 Route::get('/voirArticles', [ArticleController::class, 'index']);
+Route::get('/detainArticle/{article}', [ArticleController::class, 'show']);
 //Routes de mes projects
 
 // Route::apiResource('projets', ProjetController::class);
