@@ -28,7 +28,15 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'nom' => 'required|string|max:255',
+        //     'email' => 'required|email',
+        //     'contenu' => 'required|string'
+        // ]);
+
+        // $commentaire= new Commentaire();
+        // $commentaire->nom= $request->nom;
+        // $commentaire->nom= $request->nom;
     }
 
     /**

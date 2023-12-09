@@ -63,3 +63,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
 Route::post('/inscription', [UserController::class, 'store']);
 
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
+
+//Gestion Commentaire
+
+
