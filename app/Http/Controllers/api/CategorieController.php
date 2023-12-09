@@ -25,6 +25,26 @@ class CategorieController extends Controller
         ]);
     }
 
+    public function ProjetParCategorie(Request $request)
+    {
+        $categorieId = $request->input('categorie_id');
+
+        if ($categorieId) {
+            $projets = Projet::where('categorie_id', $categorieId)->get();
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Projets récupérés avec succès',
+                'projets' => $projets
+            ]);
+        } else {
+            return response()->json([
+                'status_code' => 400,
+                'status_message' => 'ID de catégorie manquant'
+            ]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */

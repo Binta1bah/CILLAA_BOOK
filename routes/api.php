@@ -106,12 +106,8 @@ Route::post('/commentaires', [CommentaireController::class, 'store']);
 
 
 
-// Routes investissements
-// Accepter
-// Route::put('/invertissements/accepter/{invertissement}', [InvertissementController::class, 'accepterInvertissement']);
-// Refuser
-// Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvertissement']);
 
+Route::get('/categorieprojet',[CategorieController::class,'ProjetParCategorie']);
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
 
 
@@ -119,7 +115,7 @@ Route::post('/login', [UserController::class, 'connexion'])->name('login');
 // // route pour lister les projet 
 // Route::get('/projet', [ProjetController::class, 'index']);
 // // route pour rechercher les projet par categorie
-// Route::get('/categorieprojet',[CategorieController::class,'index']);
+
 
 // route pour selectionner un projet et faire une proposition
 
