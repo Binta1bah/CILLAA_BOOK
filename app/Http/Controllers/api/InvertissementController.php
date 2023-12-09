@@ -71,39 +71,7 @@ class InvertissementController extends Controller
                     "message" => "C'est pas bon"
                 ]);
             }
-            //         // on Récupére le projet associé à l'investissement
-            //         $projet = Projet::find($request->projet_id);
-            //         if ($projet) {
-            //             // on Récupére l'utilisateur associé au projet
-            //             $user = $projet->user;
-            //             if ($user) {
-            //                 // puis on Notifie l'utilisateur qui a créé le projet
-            //                 $user->notify(new InvestissementNotification());
-            //                 return response()->json([
-            //                     'status_code' => 200,
-            //                     'status_message' => 'Votre proposition a été enregistrée',
-            //                     'data' => $investissement
-            //                 ]);
-            //             } else {
-            //                 return response()->json([
-            //                     'status_code' => 404,
-            //                     'status_message' => 'Utilisateur du projet non trouvé'
-            //                 ]);
-            //             }
-            //         } else {
-            //             return response()->json([
-            //                 'status_code' => 404,
-            //                 'status_message' => 'Projet non trouvé'
-            //             ]);
-            //         }
-            //     } else {
-            //         return response()->json([
-            //             'status_code' => 500,
-            //             'status_message' => 'Erreur lors de l\'enregistrement de la proposition'
-            //         ]);
-            //     }
-            // } catch (Exception $e) {
-            //     return response()->json($e);
+           
         }
     }
     /**
@@ -182,8 +150,16 @@ class InvertissementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invertissement $invertissement)
+    public function destroy(string $id)
     {
-        //
+        $user = auth()->user();
+        $investissement = Invertissement::findorFail($id);
+        if ($investissement->user_id == $user->id) {
+            if ($investissement->delete()) {
+                return response()->json([
+                    "message" => "Suppression effectuer"
+                ]);
+            }
+        }
     }
 }

@@ -178,7 +178,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|string|min:6',
-            'image' => 'required|string',
+            'image' => 'required',
             'description' => 'nullable|string',
             'telephone' => 'required|string|max:255',
             'role' => 'required|in:Porteur,Bailleur,Admin',

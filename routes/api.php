@@ -54,12 +54,17 @@ Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
     Route::get('/dashboardPorteur', [UserController::class, 'dashBordPorteur']);
     Route::put('/accepterProposition/{id}', [InvertissementController::class, 'valider']);
     Route::put('/refuserProposition/{id}', [InvertissementController::class, 'refuser']);
+    Route::post('/projets', [ProjetController::class, 'store']);
+    Route::put('/projets/{projet}', [ProjetController::class, 'update']);
+    Route::delete('/commentaires/{commentaire}', [ProjetController::class, "destroy"]);
 });
 
 
 // Les routes de l'admin
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/dashboardAdmin', [UserController::class, 'dashBordAdmin']);
+    //commentaires
+    Route::delete('/commentaires/{commentaire}', [CommentaireController::class, 'destroy']);
     //categorie
     Route::post('/ajouterCategorie', [CategorieController::class, 'store']);
     Route::get('/listeCtagorie', [CategorieController::class, 'index']);
@@ -67,7 +72,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
 
     // CRUD ARTICLE
-    Route::get('/voirArticles', [ArticleController::class, 'index']);
+
     Route::post('/ajouterArticle', [ArticleController::class, 'store']);
     Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
     Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
@@ -79,21 +84,32 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
 
 Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
 Route::post('/inscription', [UserController::class, 'store']);
-
+Route::get('/voirArticles', [ArticleController::class, 'index']);
 //Routes de mes projects
 
-Route::apiResource('projets', ProjetController::class);
+// Route::apiResource('projets', ProjetController::class);
+Route::get('/projets', [ProjetController::class, 'index']);
+Route::get('/projets/{projet}', [ProjetController::class, 'show']);
+
 
 
 //Routes les commentaires
-Route::apiResource('commentaires', CommentaireController::class);
+// Route::apiResource('commentaires', CommentaireController::class);
+Route::get('/commentaires', [CommentaireController::class, 'index']);
+Route::get('/commentaires/{commentaire}', [CommentaireController::class, 'show']);
+Route::post('/commentaires', [CommentaireController::class, 'store']);
+// Route::put('/commentaires/{commentaire}', [CommentaireController::class, 'update']);
+
+
+
+
 
 
 // Routes investissements
 // Accepter
-Route::put('/invertissements/accepter/{invertissement}', [InvertissementController::class, 'accepterInvertissement']);
+// Route::put('/invertissements/accepter/{invertissement}', [InvertissementController::class, 'accepterInvertissement']);
 // Refuser
-Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvertissement']);
+// Route::put('/invertissements/refuser/{invertissement}', [InvertissementController::class, 'refuserInvertissement']);
 
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
 

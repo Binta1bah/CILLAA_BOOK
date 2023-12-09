@@ -17,14 +17,14 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $article= Article::all();
-        $totalArticle= $article->count();
+        $article = Article::all();
+        $totalArticle = $article->count();
 
         return response()->json([
-            "status"=>1,
-            "message"=> "voici vos articles",
-            "Total"=>$totalArticle,
-            "data"=>$article
+            "status" => 1,
+            "message" => "voici vos articles",
+            "Total" => $totalArticle,
+            "data" => $article
         ]);
     }
 
@@ -43,32 +43,32 @@ class ArticleController extends Controller
     {
         $request->validate([
             'titre' => 'required|string|max:255',
-            'photo' => 'required|string',
+            'photo' => 'required',
             'description' => 'required|string'
         ]);
 
         $article = new Article();
-        $article->titre= $request->titre;
+        $article->titre = $request->titre;
         $imageData = $request->photo;
         $imageName = time() . '.jpeg';
         file_put_contents(public_path('image/' . $imageName), $imageData);
         $article->photo = "image/" . $imageName;
-        $article->description= $request->description;
+        $article->description = $request->description;
 
-        if($article->save()){
-             //Envoie Email aux abonnées du newsletters
-            //  $newsletters = NewsLetter::all();
-            //  foreach($newsletters as $newsletter){
-            //     Mail::to($newsletter->email)->send(new newslellerEmail());
-               
-            //  }
-           
+        if ($article->save()) {
+            // Envoie Email aux abonnées du newsletters
+            
+             $newsletters = NewsLetter::all();
+             foreach($newsletters as $newsletter){
+                Mail::to($newsletter->email)->send(new newslellerEmail());
+
+             }
+
             return response()->json([
-                "status"=>1,
-                "message"=>"L'article a été ajouter avec succès",
-                "data"=>$article
+                "status" => 1,
+                "message" => "L'article a été ajouter avec succès",
+                "data" => $article
             ]);
-           
         }
     }
 
@@ -95,22 +95,26 @@ class ArticleController extends Controller
     {
         $request->validate([
             'titre' => 'required|string|max:255',
-            'photo' => 'required|string',
+            'photo',
             'description' => 'required|string'
         ]);
 
-        $article->titre= $request->titre;
+        $article->titre = $request->titre;
         $imageData = $request->photo;
-        $imageName = time() . '.jpeg';
-        file_put_contents(public_path('image/' . $imageName), $imageData);
-        $article->photo = "image/" . $imageName;
-        $article->description= $request->description;
+        $article->description = $request->description;
+        if ($request->hasFile('image')) {
+            $imageData = $request->photo;
+            $imageName = time() . '.jpeg';
+            file_put_contents(public_path('image/' . $imageName), $imageData);
+            $article->photo = "image/" . $imageName;
+        }
 
-        if($article->update()){
+
+        if ($article->update()) {
             return response()->json([
-                "status"=>1,
-                "message"=>"L'article a été modifier avec succès",
-                "data"=>$article
+                "status" => 1,
+                "message" => "L'article a été modifier avec succès",
+                "data" => $article
             ]);
         }
     }
@@ -120,11 +124,11 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        if($article->delete()){
+        if ($article->delete()) {
             return response()->json([
-                "status"=>1,
-                "message"=>"L'article a été supprimer avec succès",
-                "data"=>$article
+                "status" => 1,
+                "message" => "L'article a été supprimer avec succès",
+                "data" => $article
             ]);
         }
     }
