@@ -156,7 +156,7 @@ class ProjetController extends Controller
         $user = auth()->user();
         $datas =  $request->validate([
             'nom' => 'required',
-            'image' => 'mimes:jpeg,png,jpg',
+            'image',
             'objectif' => 'required',
             'description' => 'required',
             'echeance' => 'required',
