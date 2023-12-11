@@ -205,10 +205,11 @@ class ProjetController extends Controller
     {
 
         $user = auth()->user();
+
         if ($projet->user_id == $user->id) {
             $projet->delete();
             return response()->json([
-                "message" => "Projet modifier avec succes"
+                "message" => "Projet supprimer avec succes"
             ]);
         } else {
             return response()->json([

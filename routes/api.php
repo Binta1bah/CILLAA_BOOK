@@ -56,7 +56,8 @@ Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
     Route::put('/refuserProposition/{id}', [InvertissementController::class, 'refuser']);
     Route::post('/projets', [ProjetController::class, 'store']);
     Route::put('/projets/{projet}', [ProjetController::class, 'update']);
-    Route::delete('/projet/{projet}', [ProjetController::class, "destroy"]);
+    Route::post('/projets/{projet}', [ProjetController::class, "destroy"]);
+   
 });
 
 
