@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use GuzzleHttp\Promise\Create;
 use App\Http\Controllers\Controller;
+use App\Models\Invertissement;
 use App\Models\Projet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -65,7 +66,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      *     path="/api/dashboardBailleur",
-     *     summary="Dashoard du bailleur avec ces information",
+     *     summary="Dashoard du bailleur avec ces information et les investissements qu'il a proposé",
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -74,9 +75,11 @@ class UserController extends Controller
     public function dashBordBailleur()
     {
         $user = auth()->user();
+        $investissements = Invertissement::where('user_id', $user->id)->get();
         return response()->json([
             "message" => "Bienvenue sur ton Dashboard",
-            "data" => $user
+            "data" => $user,
+            "Investissements" => $investissements
         ]);
     }
 

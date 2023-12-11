@@ -29,7 +29,7 @@
         },
         "/api/dashboardBailleur": {
             "get": {
-                "summary": "Dashoard du bailleur avec ces information",
+                "summary": "Dashoard du bailleur avec ces information et les investissements qu'il a proposé",
                 "operationId": "6dc7eb02590c4a589aa6bff0e440bbcd",
                 "responses": {
                     "200": {
@@ -40,7 +40,7 @@
         },
         "/api/dashboardPorteur": {
             "get": {
-                "summary": "Dashoard du porteur avec ces information",
+                "summary": "Dashoard du porteur avec ces information et ses projets",
                 "operationId": "d4c784d13d7cc7eb349dba3d90f8c8f7",
                 "responses": {
                     "200": {
