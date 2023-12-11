@@ -89,7 +89,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
 });
 
 Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
-Route::post('/inscription', [UserController::class, 'store']);
+
 Route::get('/voirArticles', [ArticleController::class, 'index']);
 Route::get('/detailArticle/{article}', [ArticleController::class, 'show']);
 //Routes de mes projects
@@ -109,6 +109,7 @@ Route::post('/ajouter/commentaires', [CommentaireController::class, 'store']);
 
 Route::get('/categorieprojet', [CategorieController::class, 'ProjetParCategorie']);
 
+Route::post('/inscription', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
 Route::get('/projetsDisponibles', [ProjetController::class, 'projetDispobile']);
 
