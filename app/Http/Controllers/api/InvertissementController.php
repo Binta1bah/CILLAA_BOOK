@@ -160,7 +160,7 @@ class InvertissementController extends Controller
     {
 
         $investissement = Invertissement::findOrFail($id);
-        if ($investissement->status == "Accpter") {
+        if ($investissement->status !== "Refuer") {
             $investissement->status = "Refuser";
             if ($investissement->save()) {
 

@@ -153,22 +153,35 @@ class ProjetController extends Controller
     public function update(Request $request, Projet $projet): \Illuminate\Http\JsonResponse
     {
         //update avec validation
-        $request->validate([
+        $user = auth()->user();
+        $datas =  $request->validate([
             'nom' => 'required',
-            'image' => 'required',
+            'image' => 'mimes:jpeg,png,jpg',
             'objectif' => 'required',
             'description' => 'required',
             'echeance' => 'required',
             'budget' => 'required|numeric',
             'etat' => 'in:Disponible,Financé',
             'categorie_id' => 'required|exists:categories,id',
-            'user_id' => 'required|exists:users,id',
+            'user_id'
         ]);
 
-        // On met à jour un projet existant
-        $projet->update($request->all());
+        if ($projet->user_id == $user->id) {
 
-        return response()->json(['message' => 'Projet update successfully', 'projet' => $projet], 201);
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('images', 'public');
+                $validatedData['image'] = $imagePath;
+            }
+            $projet->update($datas);
+
+            return response()->json([
+                'message' => 'Projet mis à jour avec succès', 'projet' => $projet
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Vous n\'êtes pas autorisé à mettre à jour ce projet.'
+            ]);
+        }
     }
 
     /**
@@ -176,7 +189,7 @@ class ProjetController extends Controller
      */
     /**
      * @OA\Delete(
-     *     path="/api/commentaires/{commentaire}",
+     *     path="/api/projet/{projet}",
      *     summary= "Cette route permet de supprimer un projet donnée",
      * @OA\Parameter(
      *         name="projet",
@@ -190,8 +203,17 @@ class ProjetController extends Controller
      */
     public function destroy(Projet $projet): \Illuminate\Http\JsonResponse
     {
-        $projet->delete();
 
-        return response()->json();
+        $user = auth()->user();
+        if ($projet->user_id == $user->id) {
+            $projet->delete();
+            return response()->json([
+                "message" => "Projet modifier avec succes"
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Suppression impossible vous n'êtes pas proprietaire de ce projet"
+            ]);
+        }
     }
 }
