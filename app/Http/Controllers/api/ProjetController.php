@@ -7,11 +7,22 @@ use App\Models\Projet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use SebastianBergmann\CodeCoverage\Report\Xml\Project;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(title="EndPoint de Projet ", version="0.1")
+ */
 class ProjetController extends Controller
 {
     /**
      * Display a listing of the resource.
+     */
+     /**
+     * @OA\Get(
+     *     path="/api/projets",
+     *     summary= "Cette route permet de lister tous les projets",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
@@ -24,6 +35,7 @@ class ProjetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+   
     public function creer(Request $request): \Illuminate\Http\JsonResponse
     {
 
@@ -43,6 +55,14 @@ class ProjetController extends Controller
         $projet = Projet::create($request->all());
         return response()->json(['message' => 'Projet create successfully', 'projet' => $projet], 201);
     }
+
+         /**
+     * @OA\Post(
+     *     path="/api/projets",
+     *     summary= "Cette route permet de créer des projet",
+     *     @OA\Response(response="201", description="le projet a été creer avec succès")
+     * )
+     */
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -72,6 +92,14 @@ class ProjetController extends Controller
     /**
      * Display the specified resource.
      */
+    
+         /**
+     * @OA\Get(
+     *     path="/api/projets/{projet}",
+     *     summary= "Cette route permet de voir le detail d'un projet",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
     public function show(Projet $projet): \Illuminate\Http\JsonResponse
     {
         return response()->json($projet);
@@ -79,6 +107,13 @@ class ProjetController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+         /**
+     * @OA\Put(
+     *     path="/api/projets/{projet}",
+     *     summary= "Cette route permet de modifier un projet specifique",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function update(Request $request, Projet $projet): \Illuminate\Http\JsonResponse
     {
@@ -103,6 +138,13 @@ class ProjetController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     */
+        /**
+     * @OA\Delete(
+     *     path="/api/commentaires/{commentaire}",
+     *     summary= "Cette route permet de supprimer un projet donnée",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
     public function destroy(Projet $projet): \Illuminate\Http\JsonResponse
     {
