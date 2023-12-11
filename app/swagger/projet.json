@@ -25,6 +25,17 @@
                 }
             }
         },
+        "/api/projetsDisponibles": {
+            "get": {
+                "summary": "Cette route permet de lister tous les projets dispobiles",
+                "operationId": "c01d597d456d6636e3c9978f20ca892f",
+                "responses": {
+                    "200": {
+                        "description": "succes"
+                    }
+                }
+            }
+        },
         "/api/projets/{projet}": {
             "get": {
                 "summary": "Cette route permet de voir le detail d'un projet",

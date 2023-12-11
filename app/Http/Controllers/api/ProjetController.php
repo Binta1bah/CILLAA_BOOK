@@ -32,6 +32,27 @@ class ProjetController extends Controller
         return response()->json($projets);
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/api/projetsDisponibles",
+     *     summary= "Cette route permet de lister tous les projets dispobiles",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
+    public function projetDispobile()
+    {
+        $projets = Projet::where('etat', 'Disponible')->get();
+        return response()->json([
+            "statut" => 1,
+            "message" => "Les projets disponible",
+            "Projets" => $projets
+        ]);
+    }
+
+
+
     /**
      * Store a newly created resource in storage.
      */

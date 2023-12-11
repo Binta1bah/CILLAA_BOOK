@@ -107,14 +107,10 @@ Route::get('/commentaires/{commentaire}', [CommentaireController::class, 'show']
 Route::post('/ajouter/commentaires', [CommentaireController::class, 'store']);
 // Route::put('/commentaires/{commentaire}', [CommentaireController::class, 'update']);
 
-
-
-
-
-
-
 Route::get('/categorieprojet', [CategorieController::class, 'ProjetParCategorie']);
+
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
+Route::get('/projetsDisponibles', [ProjetController::class, 'projetDispobile']);
 
 
 

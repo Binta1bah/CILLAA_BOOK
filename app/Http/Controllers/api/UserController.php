@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use GuzzleHttp\Promise\Create;
 use App\Http\Controllers\Controller;
+use App\Models\Projet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -84,7 +85,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      *     path="/api/dashboardPorteur",
-     *     summary="Dashoard du porteur avec ces information",
+     *     summary="Dashoard du porteur avec ces information et ses projets",
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -92,9 +93,11 @@ class UserController extends Controller
     public function dashBordPorteur()
     {
         $user = auth()->user();
+        $projet = Projet::where('user_id', $user->id)->get();
         return response()->json([
             "message" => "Bienvenue sur ton Dashboard",
-            "data" => $user
+            "data" => $user,
+            "projets" => $projet
         ]);
     }
 
