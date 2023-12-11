@@ -11,11 +11,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(title="endPoind de user", version="0.1")
+ */
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
+     */
+
+    /**
+     * @OA\Get(
+     *     path="/api/listePorteurs",
+     *     summary="liste des porteurs et leur nombre de projets par l'admin",
+     *     @OA\Response(response="200", description="succes")
+     * )
      */
 
     public function listePorteur()
@@ -29,6 +42,13 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/listeBailleurs",
+     *     summary="liste des bailleurs et leur nombre de projets par l'admin",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
 
     public function listeBailleur()
     {
@@ -41,6 +61,14 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/dashboardBailleur",
+     *     summary="Dashoard du bailleur avec ces information",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
 
     public function dashBordBailleur()
     {
@@ -51,6 +79,16 @@ class UserController extends Controller
         ]);
     }
 
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/dashboardPorteur",
+     *     summary="Dashoard du porteur avec ces information",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
     public function dashBordPorteur()
     {
         $user = auth()->user();
@@ -59,6 +97,14 @@ class UserController extends Controller
             "data" => $user
         ]);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/dashboardAdmin",
+     *     summary="Dashoard de l'admin avec ces information",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
 
     public function dashBordAdmin()
     {
@@ -72,6 +118,8 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+
     public function login(Request $request)
     {
         $request->validate([
@@ -119,6 +167,15 @@ class UserController extends Controller
             ]);
         }
     }
+
+    /**
+     * @OA\post(
+     *     path="/api/login",
+     *     summary="connexion d'un user",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
 
     public function Connexion(Request $request)
     {
@@ -171,6 +228,16 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    /**
+     * @OA\post(
+     *     path="/api/inscription",
+     *     summary="inscription d'un user",
+     *     @OA\Response(response="200", description="enregistrer succes")
+     * )
+     */
+
+
     public function store(Request $request)
     {
 
@@ -207,6 +274,16 @@ class UserController extends Controller
         }
     }
 
+
+
+    /**
+     * @OA\post(
+     *     path="/api/logout",
+     *     summary="deconnexion d'un user",
+     *     @OA\Response(response="200", description="decconnexion succes")
+     * )
+     */
+
     public function logout(): Response
     {
         $user = Auth::user();
@@ -219,6 +296,17 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+
+
+    /**
+     * @OA\get(
+     *     path="/api/info/{id}",
+     *     summary="information de profil d'un user",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
+
     public function show(string $id)
     {
         $user = User::findorFail($id);
@@ -246,10 +334,19 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    /**
+     * @OA\post(
+     *     path="/api/bloquerUser{id}",
+     *     summary="Bloquer un user par l'admin",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
     public function bloquerUser(string $id)
     {
         $user = User::findorFail($id);
-        if ($user->role == "Bailleir" || $user->role == "Porteur") {
+        if ($user->role == "Bailleur" || $user->role == "Porteur") {
 
             $user->est_bloque = 1;
             $user->save();
@@ -260,6 +357,14 @@ class UserController extends Controller
             ]);
         }
     }
+
+    /**
+     * @OA\post(
+     *     path="/api/debloquerUser{id}",
+     *     summary="Débloquer un user par l'admin",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
 
     public function debloquerUser(string $id)
     {
@@ -279,6 +384,17 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+
+    /**
+     * @OA\put(
+     *     path="/api/modifierProfil/{id}",
+     *     summary="Modifier le profil d'un user",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
+
     public function update(Request $request, string $id)
     {
         $user =  User::findorFail($id);
