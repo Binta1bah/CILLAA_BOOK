@@ -26,7 +26,7 @@ class InvertissementController extends Controller
      * Display a listing of the resource.
      */
 
-      /**
+    /**
      * @OA\Get(
      *     path="/api/investissement/liste",
      *     summary= "Cette route permet de lister les investissement d'un bailleur donné",
@@ -56,7 +56,7 @@ class InvertissementController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-     /**
+    /**
      * @OA\Post(
      *     path="/api/investissement/{projet}",
      *     summary= "Cette route permet d'ajouter un investissement",
@@ -69,38 +69,52 @@ class InvertissementController extends Controller
         $user = auth()->user();
         $projet = Projet::findOrFail($id);
         // $porteur = $projet->user_id;
-        $projet_id = $projet->id;
-        $user_id = $user->id;
+        if ($projet->etat == 'Disponible') {
 
-        // try {
-        $investissement = new Invertissement();
-        $investissement->montant = $request->montant;
-        $investissement->description = $request->description;
-        $investissement->projet_id = $projet_id;
-        $investissement->user_id = $user_id;
-        if ($investissement->save()) {
-            $porteur = User::find($projet['user_id']);
-            $envoi = Mail::to($porteur->email)->send(new InvestissementMail());
-            if ($envoi) {
-                return response()->json([
-                    "message" => "c'est bon email envoyé"
-                ]);
-            } else {
-                return response()->json([
-                    "message" => "C'est pas bon"
-                ]);
+            $projet_id = $projet->id;
+            $user_id = $user->id;
+
+            // try {
+            $investissement = new Invertissement();
+            $investissement->montant = $request->montant;
+            $investissement->description = $request->description;
+            $investissement->projet_id = $projet_id;
+            $investissement->user_id = $user_id;
+            if ($investissement->save()) {
+                $porteur = User::find($projet['user_id']);
+                $envoi = Mail::to($porteur->email)->send(new InvestissementMail());
+                if ($envoi) {
+                    return response()->json([
+                        "message" => "c'est bon email envoyé"
+                    ]);
+                } else {
+                    return response()->json([
+                        "message" => "C'est pas bon"
+                    ]);
+                }
             }
-           
+        } else {
+            return response()->json([
+                "message" => "Ce projet n'est pas disponible"
+            ]);
         }
     }
+
     /**
      * Display the specified resource.
      */
 
-        /**
+    /**
      * @OA\Get(
      *     path="/api/investissement/{id}",
      *     summary= "Cette route permet de consulter le detail d'un investissement",
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'incestissement",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -128,10 +142,17 @@ class InvertissementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-         /**
+    /**
      * @OA\Put(
      *     path="/api/refuserProposition/{id}",
      *     summary= "Cette route permet à un porteur de projet de refuser un investissement",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'investissement",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -139,7 +160,7 @@ class InvertissementController extends Controller
     {
 
         $investissement = Invertissement::findOrFail($id);
-        if ($investissement->status = "Accpter") {
+        if ($investissement->status == "Accpter") {
             $investissement->status = "Refuser";
             if ($investissement->save()) {
 
@@ -154,20 +175,29 @@ class InvertissementController extends Controller
         }
     }
 
-       /**
+    /**
      * @OA\Put(
      *     path="/api/accepterProposition/{id}",
      *     summary= "Cette route permet à un porteur de projet d'accepter un investissement",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'incestissement",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
     public function valider(string $id)
     {
         $investissement = Invertissement::findOrFail($id);
-        if ($investissement->status = "Refuser") {
+        if ($investissement->status !== "Accepter") {
             $investissement->status = "Accepter";
             if ($investissement->save()) {
-
+                $projet = $investissement->projet;
+                $projet->etat = 'Finance';
+                $projet->save();
                 $bailler = User::find($investissement['user_id']);
                 $envoi = Mail::to($bailler->email)->send(new PropositionAcceptee());
                 if ($envoi) {
@@ -192,10 +222,17 @@ class InvertissementController extends Controller
      * Remove the specified resource from storage.
      * /supprimer/investissement/{id}
      */
-         /**
+    /**
      * @OA\Delete(
      *     path="/api/supprimer/investissement/{id}",
      *     summary= "Cette route permet de supprimer un investissement specifique",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'incestissement",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */

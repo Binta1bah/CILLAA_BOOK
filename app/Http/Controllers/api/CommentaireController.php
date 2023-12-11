@@ -71,6 +71,13 @@ class CommentaireController extends Controller
      * @OA\Get(
      *     path="/api/commentaires/{commentaire}",
      *     summary="Details d'un commentaires",
+     *  @OA\Parameter(
+     *         name="commentaire",
+     *         in="path",
+     *         required=true,
+     *         description="ID du commentaire",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -110,6 +117,13 @@ class CommentaireController extends Controller
      * @OA\delete(
      *     path="/api/commentaires/{commentaire}",
      *     summary="Supprimer un commentaires par l'admin",
+     *  @OA\Parameter(
+     *         name="commentaire",
+     *         in="path",
+     *         required=true,
+     *         description="ID du commentaire",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */

@@ -31,6 +31,17 @@
             "get": {
                 "summary": "details d'un article",
                 "operationId": "bd4b55aa18a0796fa817af5fcfd8317e",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "ID de l'article",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -42,6 +53,17 @@
             "put": {
                 "summary": "modifier un article",
                 "operationId": "39c96aac12f48f3255d1b0b2ece3cede",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "ID de l'article",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -53,6 +75,17 @@
             "delete": {
                 "summary": "supprimer un article",
                 "operationId": "41f0ba706cc30174347c97d33e7a9dc5",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "ID de l'article",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"

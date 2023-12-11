@@ -107,7 +107,15 @@ class NewsLetterController extends Controller
      * @OA\delete(
      *     path="/api/supprimerNewsLetter/{id}",
      *     summary="Supprimer un news letter par l'admin",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID du news letter",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
+     *   
      * )
      */
 

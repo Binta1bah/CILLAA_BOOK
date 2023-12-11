@@ -113,7 +113,7 @@ Route::post('/ajouter/commentaires', [CommentaireController::class, 'store']);
 
 
 
-Route::get('/categorieprojet',[CategorieController::class,'ProjetParCategorie']);
+Route::get('/categorieprojet', [CategorieController::class, 'ProjetParCategorie']);
 Route::post('/login', [UserController::class, 'connexion'])->name('login');
 
 

@@ -114,6 +114,13 @@ class CategorieController extends Controller
      * @OA\Put(
      *     path="/api/ModifierCategorie/{id}",
      *     summary= "Cette route permet de modifier une categorie",
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la categorie",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="Succes")
      * )
      */
@@ -143,6 +150,13 @@ class CategorieController extends Controller
      * @OA\Delete(
      *     path="/api/SupprimerCategorie/{id}",
      *     summary= "Cette route permet de supprimer une categorie",
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la categorie",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="Succes")
      * )
      */

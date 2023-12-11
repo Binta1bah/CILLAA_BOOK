@@ -93,6 +93,13 @@ class ArticleController extends Controller
      * @OA\get(
      *     path="/api/detailArticle/{article}",
      *     summary="details d'un article",
+     *  @OA\Parameter(
+     *         name="article",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'article",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -123,6 +130,13 @@ class ArticleController extends Controller
      * @OA\put(
      *     path="/api/modifierArticle/{article}",
      *     summary="modifier un article",
+     *  @OA\Parameter(
+     *         name="article",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'article",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -163,6 +177,13 @@ class ArticleController extends Controller
      * @OA\delete(
      *     path="/api/supprimerArticle/{article}",
      *     summary="supprimer un article",
+     *  @OA\Parameter(
+     *         name="article",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'article",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */

@@ -31,6 +31,17 @@
             "get": {
                 "summary": "Cette route permet de consulter le detail d'un investissement",
                 "operationId": "dce81916ff1d4f4562525161a9fa122b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'incestissement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -42,6 +53,17 @@
             "put": {
                 "summary": "Cette route permet à un porteur de projet de refuser un investissement",
                 "operationId": "cffb04cc22df993c938c5cc22c8da85b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'investissement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -53,6 +75,17 @@
             "put": {
                 "summary": "Cette route permet à un porteur de projet d'accepter un investissement",
                 "operationId": "2ce5abe6074753f3635a46e3d79d856a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'incestissement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -64,6 +97,17 @@
             "delete": {
                 "summary": "Cette route permet de supprimer un investissement specifique",
                 "operationId": "f00adbd398a3482c1ca9b9a2b1d38670",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'incestissement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"

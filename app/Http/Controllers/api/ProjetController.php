@@ -17,7 +17,7 @@ class ProjetController extends Controller
     /**
      * Display a listing of the resource.
      */
-     /**
+    /**
      * @OA\Get(
      *     path="/api/projets",
      *     summary= "Cette route permet de lister tous les projets",
@@ -35,7 +35,7 @@ class ProjetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   
+
     public function creer(Request $request): \Illuminate\Http\JsonResponse
     {
 
@@ -56,7 +56,7 @@ class ProjetController extends Controller
         return response()->json(['message' => 'Projet create successfully', 'projet' => $projet], 201);
     }
 
-         /**
+    /**
      * @OA\Post(
      *     path="/api/projets",
      *     summary= "Cette route permet de créer des projet",
@@ -92,11 +92,18 @@ class ProjetController extends Controller
     /**
      * Display the specified resource.
      */
-    
-         /**
+
+    /**
      * @OA\Get(
      *     path="/api/projets/{projet}",
      *     summary= "Cette route permet de voir le detail d'un projet",
+     * @OA\Parameter(
+     *         name="projet",
+     *         in="path",
+     *         required=true,
+     *         description="ID du projet",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -108,10 +115,17 @@ class ProjetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-         /**
+    /**
      * @OA\Put(
      *     path="/api/projets/{projet}",
      *     summary= "Cette route permet de modifier un projet specifique",
+     * @OA\Parameter(
+     *         name="projet",
+     *         in="path",
+     *         required=true,
+     *         description="ID du projet",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -139,10 +153,17 @@ class ProjetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-        /**
+    /**
      * @OA\Delete(
      *     path="/api/commentaires/{commentaire}",
      *     summary= "Cette route permet de supprimer un projet donnée",
+     * @OA\Parameter(
+     *         name="projet",
+     *         in="path",
+     *         required=true,
+     *         description="ID du projet",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */

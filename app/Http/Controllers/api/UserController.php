@@ -302,6 +302,13 @@ class UserController extends Controller
      * @OA\get(
      *     path="/api/info/{id}",
      *     summary="information de profil d'un user",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -339,6 +346,13 @@ class UserController extends Controller
      * @OA\post(
      *     path="/api/bloquerUser{id}",
      *     summary="Bloquer un user par l'admin",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -362,6 +376,13 @@ class UserController extends Controller
      * @OA\post(
      *     path="/api/debloquerUser{id}",
      *     summary="Débloquer un user par l'admin",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */
@@ -390,6 +411,13 @@ class UserController extends Controller
      * @OA\put(
      *     path="/api/modifierProfil/{id}",
      *     summary="Modifier le profil d'un user",
+     * @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur",
+     *         @OA\Schema(type="integer")
+     * ),
      *     @OA\Response(response="200", description="succes")
      * )
      */

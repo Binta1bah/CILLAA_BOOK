@@ -97,6 +97,17 @@
             "get": {
                 "summary": "information de profil d'un user",
                 "operationId": "c754d6837b94333757bd85afe87168db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -108,6 +119,17 @@
             "post": {
                 "summary": "Bloquer un user par l'admin",
                 "operationId": "42dc47ad36d1dd78035994aca4fbd7ba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -119,6 +141,17 @@
             "post": {
                 "summary": "Débloquer un user par l'admin",
                 "operationId": "d58da2efb6f0870b63798743793a4cf4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -130,6 +163,17 @@
             "put": {
                 "summary": "Modifier le profil d'un user",
                 "operationId": "43488e86590da1b03f9092af530ec6e9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"

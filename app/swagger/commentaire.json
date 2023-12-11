@@ -31,6 +31,17 @@
             "get": {
                 "summary": "Details d'un commentaires",
                 "operationId": "36fc3886a892c7d0840ebad7f72a6664",
+                "parameters": [
+                    {
+                        "name": "commentaire",
+                        "in": "path",
+                        "description": "ID du commentaire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -40,6 +51,17 @@
             "delete": {
                 "summary": "Supprimer un commentaires par l'admin",
                 "operationId": "02c1e1681acd5dfe6ecf304fc1e60ecf",
+                "parameters": [
+                    {
+                        "name": "commentaire",
+                        "in": "path",
+                        "description": "ID du commentaire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"

@@ -29,6 +29,17 @@
             "get": {
                 "summary": "Cette route permet de voir le detail d'un projet",
                 "operationId": "955140da2c17751b60bf48ca3addacf2",
+                "parameters": [
+                    {
+                        "name": "projet",
+                        "in": "path",
+                        "description": "ID du projet",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -38,6 +49,17 @@
             "put": {
                 "summary": "Cette route permet de modifier un projet specifique",
                 "operationId": "b8e04b5e7602f75e0e1b45c2de0e617c",
+                "parameters": [
+                    {
+                        "name": "projet",
+                        "in": "path",
+                        "description": "ID du projet",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
@@ -49,6 +71,17 @@
             "delete": {
                 "summary": "Cette route permet de supprimer un projet donnée",
                 "operationId": "977ccf36c1b8fe296413e6cdc8f3e0e3",
+                "parameters": [
+                    {
+                        "name": "projet",
+                        "in": "path",
+                        "description": "ID du projet",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "succes"
