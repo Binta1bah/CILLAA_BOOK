@@ -21,6 +21,26 @@ use OpenApi\Annotations as OA;
 
 class UserController extends Controller
 {
+
+    /**
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="liste de tout les users",
+     *     @OA\Response(response="200", description="succes")
+     * )
+     */
+
+    public function index()
+    {
+        $users = User::all();
+        return response()->json([
+            "statut" => 1,
+            "message Liste des users",
+            "Users" => $users
+        ]);
+    }
+
+
     /**
      * Display a listing of the resource.
      */

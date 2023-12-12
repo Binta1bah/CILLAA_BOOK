@@ -5,6 +5,17 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/users": {
+            "get": {
+                "summary": "liste de tout les users",
+                "operationId": "d64c69c227bcaa94189f8552f9336c55",
+                "responses": {
+                    "200": {
+                        "description": "succes"
+                    }
+                }
+            }
+        },
         "/api/listePorteurs": {
             "get": {
                 "summary": "liste des porteurs et leur nombre de projets par l'admin",

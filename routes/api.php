@@ -33,6 +33,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::get('/users', [UserController::class, 'index']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/info/{id}', [UserController::class, 'show']);
@@ -57,7 +60,6 @@ Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
     Route::post('/projets', [ProjetController::class, 'store']);
     Route::put('/projets/{projet}', [ProjetController::class, 'update']);
     Route::post('/projets/{projet}', [ProjetController::class, "destroy"]);
-   
 });
 
 
