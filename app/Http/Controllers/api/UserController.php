@@ -95,7 +95,7 @@ class UserController extends Controller
     public function dashBordBailleur()
     {
         $user = auth()->user();
-$investissements = Invertissement::where('user_id', $user->id)->get();
+        $investissements = Invertissement::where('user_id', $user->id)->get();
         return response()->json([
             "message" => "Bienvenue sur ton Dashboard",
             "data" => $user,
@@ -116,7 +116,7 @@ $investissements = Invertissement::where('user_id', $user->id)->get();
     public function dashBordPorteur()
     {
         $user = auth()->user();
-$projet = Projet::where('user_id', $user->id)->get();
+        $projet = Projet::where('user_id', $user->id)->get();
         return response()->json([
             "message" => "Bienvenue sur ton Dashboard",
             "data" => $user,
@@ -286,10 +286,11 @@ $projet = Projet::where('user_id', $user->id)->get();
         $user->telephone = $request->telephone;
         $user->role = $request->role;
         $user->organisme = $request->organisme;
-        $imageData = $request->image;
-        $imageName = time() . '.jpeg';
-        file_put_contents(public_path('image/' . $imageName), $imageData);
-        $user->image = "image/" . $imageName;
+        $user->image = $request->image;
+        // $imageData = $request->image;
+        // $imageName = time() . '.jpeg';
+        // file_put_contents(public_path('image/' . $imageName), $imageData);
+        // $user->image = "image/" . $imageName;
 
         if ($user->save()) {
             return response()->json([
@@ -312,9 +313,9 @@ $projet = Projet::where('user_id', $user->id)->get();
 
     public function logout(): Response
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        $user->currentAccessToken()->delete();
+        // $user->currentAccessToken()->delete();
 
         return Response(['message' => 'Deconnexion effectuée'], 200);
     }
@@ -328,7 +329,7 @@ $projet = Projet::where('user_id', $user->id)->get();
      * @OA\get(
      *     path="/api/info/{id}",
      *     summary="information de profil d'un user",
-* @OA\Parameter(
+     * @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -343,25 +344,25 @@ $projet = Projet::where('user_id', $user->id)->get();
     public function show(string $id)
     {
         $user = User::findorFail($id);
-        if ($user->role === "Bailleur") {
-            return response()->json([
-                "statut" => 1,
-                "message" => "information du bailleur",
-                "datas" => $user
-            ]);
-        } elseif ($user->role === "Porteur") {
-            return response()->json([
-                "statut" => 1,
-                "message" => "information du Porteur",
-                "datas" => $user
-            ]);
-        } elseif ($user->role === "Admin") {
-            return response()->json([
-                "statut" => 1,
-                "message" => "information du Admin",
-                "datas" => $user
-            ]);
-        }
+        // if ($user->role === "Bailleur") {
+        return response()->json([
+            "statut" => 1,
+            "message" => "information du user",
+            "datas" => $user
+        ]);
+        // } elseif ($user->role === "Porteur") {
+        //     return response()->json([
+        //         "statut" => 1,
+        //         "message" => "information du Porteur",
+        //         "datas" => $user
+        //     ]);
+        // } elseif ($user->role === "Admin") {
+        //     return response()->json([
+        //         "statut" => 1,
+        //         "message" => "information du Admin",
+        //         "datas" => $user
+        //     ]);
+        // }
     }
 
     /**
@@ -372,7 +373,7 @@ $projet = Projet::where('user_id', $user->id)->get();
      * @OA\post(
      *     path="/api/bloquerUser{id}",
      *     summary="Bloquer un user par l'admin",
-* @OA\Parameter(
+     * @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -402,7 +403,7 @@ $projet = Projet::where('user_id', $user->id)->get();
      * @OA\post(
      *     path="/api/debloquerUser{id}",
      *     summary="Débloquer un user par l'admin",
-* @OA\Parameter(
+     * @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -437,7 +438,7 @@ $projet = Projet::where('user_id', $user->id)->get();
      * @OA\put(
      *     path="/api/modifierProfil/{id}",
      *     summary="Modifier le profil d'un user",
-* @OA\Parameter(
+     * @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -472,26 +473,31 @@ $projet = Projet::where('user_id', $user->id)->get();
         $user->role = $request->role;
         $user->organisme = $request->organisme;
 
-        if ($request->hasFile('image')) {
-            $imageData = $request->image;
-            $imageName = time() . '.jpeg';
-            file_put_contents(public_path('image/' . $imageName), $imageData);
-            $user->image = "image/" . $imageName;
+        if ($request->image) {
+            $user->image = $request->image;
         }
 
-        $userAuth = Auth()->user();
-        if ($userAuth->id == $user->id) {
-            $user->save();
-            return response()->json([
-                "statut" => 1,
-                "message" => "Modification effectuée",
-                "datas" => $user
-            ]);
-        } else {
-            return response()->json([
-                "message" => "c'est pas pour toi"
-            ]);
-        }
+        // if ($request->hasFile('image')) {
+        //     $imageData = $request->image;
+        //     $imageName = time() . '.jpeg';
+        //     file_put_contents(public_path('image/' . $imageName), $imageData);
+        //     $user->image = "image/" . $imageName;
+        // }
+
+        // $userAuth = Auth()->user();
+        // if ($userAuth->id == $user->id) {
+
+        $user->save();
+        return response()->json([
+            "statut" => 1,
+            "message" => "Modification effectuée",
+            "datas" => $user
+        ]);
+        // } else {
+        //     return response()->json([
+        //         "message" => "c'est pas pour toi"
+        //     ]);
+        // }
     }
 
     /**

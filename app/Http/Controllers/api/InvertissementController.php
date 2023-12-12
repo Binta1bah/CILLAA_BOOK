@@ -36,8 +36,9 @@ class InvertissementController extends Controller
     public function index()
     {
 
-        $user = auth()->user();
-        $investissements = Invertissement::where('user_id', $user->id)->get();
+        // $user = auth()->user();
+        // $investissements = Invertissement::where('user_id', $user->id)->get();
+        $investissements = Invertissement::all();
 
         return response()->json([
             "message" => "Vos proposition d'investissement",
@@ -66,20 +67,20 @@ class InvertissementController extends Controller
     public function store(EditeProjetRequest $request, string $id)
 
     {
-        $user = auth()->user();
+        // $user = auth()->user();
         $projet = Projet::findOrFail($id);
         // $porteur = $projet->user_id;
         if ($projet->etat == 'Disponible') {
 
             $projet_id = $projet->id;
-            $user_id = $user->id;
+            // $user_id = $user->id;
 
             // try {
             $investissement = new Invertissement();
             $investissement->montant = $request->montant;
             $investissement->description = $request->description;
             $investissement->projet_id = $projet_id;
-            $investissement->user_id = $user_id;
+            $investissement->user_id = $request->user_id;
             if ($investissement->save()) {
                 $porteur = User::find($projet['user_id']);
                 $envoi = Mail::to($porteur->email)->send(new InvestissementMail());
@@ -123,20 +124,20 @@ class InvertissementController extends Controller
 
         $investissement = Invertissement::findorFail($id);
         $projet = $investissement->projet->nom;
-        $user = auth()->user();
-        if ($investissement->user_id == $user->id) {
+        // $user = auth()->user();
+        // if ($investissement->user_id == $user->id) {
 
-            return response()->json([
-                "message" => "Details de la proposition",
-                "datas" => [
-                    "montant" => $investissement->montant,
-                    "description" => $investissement->description,
-                    "projet" => $projet,
-                    'date' => $investissement->created_at,
-                    'statut' => $investissement->status
-                ]
-            ]);
-        }
+        return response()->json([
+            "message" => "Details de la proposition",
+            "datas" => [
+                "montant" => $investissement->montant,
+                "description" => $investissement->description,
+                "projet" => $projet,
+                'date' => $investissement->created_at,
+                'statut' => $investissement->status
+            ]
+        ]);
+        // }
     }
 
     /**
@@ -238,14 +239,14 @@ class InvertissementController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = auth()->user();
+        // $user = auth()->user();
         $investissement = Invertissement::findorFail($id);
-        if ($investissement->user_id == $user->id) {
+        // if ($investissement->user_id == $user->id) {
             if ($investissement->delete()) {
                 return response()->json([
                     "message" => "Suppression effectuer"
                 ]);
             }
-        }
+        // }
     }
 }

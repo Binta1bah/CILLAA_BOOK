@@ -87,7 +87,7 @@ class ProjetController extends Controller
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $user = auth()->user();
+        // $user = auth()->user();
         $data = $request->validate([
             'nom' => 'required',
             'image' => 'required',
@@ -97,13 +97,13 @@ class ProjetController extends Controller
             'budget' => 'required|numeric',
             'etat' => 'in:Disponible,Financé',
             'categorie_id' => 'required|exists:categories,id',
-            // 'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id'
         ]);
-        $data['user_id'] = $user->id;
-        if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('images', 'public');
-            $data['image'] = $image_path;
-        }
+        // $data['user_id'] = $user->id;
+        // if ($request->hasFile('image')) {
+        //     $image_path = $request->file('image')->store('images', 'public');
+        //     $data['image'] = $image_path;
+        // }
         $projet = Projet::create($data);
 
         return response()->json(['message' => 'Projet create successfully', 'projet' => $projet], 201);
@@ -153,7 +153,7 @@ class ProjetController extends Controller
     public function update(Request $request, Projet $projet): \Illuminate\Http\JsonResponse
     {
         //update avec validation
-        $user = auth()->user();
+        // $user = auth()->user();
         $datas =  $request->validate([
             'nom' => 'required',
             'image',
@@ -162,26 +162,27 @@ class ProjetController extends Controller
             'echeance' => 'required',
             'budget' => 'required|numeric',
             'etat' => 'in:Disponible,Financé',
+            'user_id' => 'required|exists:users,id',
             'categorie_id' => 'required|exists:categories,id',
-            'user_id'
+            // 'user_id' => 'required'
         ]);
+        // $data['user_id'] = $user->id;
 
-        if ($projet->user_id == $user->id) {
+        // if ($projet->user_id == $user->id) {
 
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('images', 'public');
-                $validatedData['image'] = $imagePath;
-            }
-            $projet->update($datas);
-
-            return response()->json([
-                'message' => 'Projet mis à jour avec succès', 'projet' => $projet
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Vous n\'êtes pas autorisé à mettre à jour ce projet.'
-            ]);
+        if ($request->image) {
+            $data['image'] = $request->image;
         }
+        $projet->update($datas);
+
+        return response()->json([
+            'message' => 'Projet mis à jour avec succès', 'projet' => $projet
+        ]);
+        // } else {
+        // return response()->json([
+        //     'message' => 'Vous n\'êtes pas autorisé à mettre à jour ce projet.'
+        // ]);
+        // }
     }
 
     /**
@@ -204,17 +205,17 @@ class ProjetController extends Controller
     public function destroy(Projet $projet): \Illuminate\Http\JsonResponse
     {
 
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if ($projet->user_id == $user->id) {
-            $projet->delete();
-            return response()->json([
-                "message" => "Projet supprimer avec succes"
-            ]);
-        } else {
-            return response()->json([
-                "message" => "Suppression impossible vous n'êtes pas proprietaire de ce projet"
-            ]);
-        }
+        // if ($projet->user_id == $user->id) {
+        $projet->delete();
+        return response()->json([
+            "message" => "Projet supprimer avec succes"
+        ]);
+        // } else {
+        //     return response()->json([
+        //         "message" => "Suppression impossible vous n'êtes pas proprietaire de ce projet"
+        //     ]);
+        // }
     }
 }

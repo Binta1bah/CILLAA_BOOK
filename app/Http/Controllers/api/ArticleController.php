@@ -63,11 +63,12 @@ class ArticleController extends Controller
 
         $article = new Article();
         $article->titre = $request->titre;
-        $imageData = $request->photo;
-        $imageName = time() . '.jpeg';
-        file_put_contents(public_path('image/' . $imageName), $imageData);
-        $article->photo = "image/" . $imageName;
+        $article->photo = $request->photo;
         $article->description = $request->description;
+        // $imageData = $request->photo;
+        // $imageName = time() . '.jpeg';
+        // file_put_contents(public_path('image/' . $imageName), $imageData);
+
 
         if ($article->save()) {
             // Envoie Email aux abonnées du newsletters
@@ -150,14 +151,21 @@ class ArticleController extends Controller
         ]);
 
         $article->titre = $request->titre;
-        $imageData = $request->photo;
         $article->description = $request->description;
-        if ($request->hasFile('image')) {
-            $imageData = $request->photo;
-            $imageName = time() . '.jpeg';
-            file_put_contents(public_path('image/' . $imageName), $imageData);
-            $article->photo = "image/" . $imageName;
+        if ($article->photo) {
+            $article->photo = $request->photo;
         }
+
+        // $imageData = $request->photo;
+        // if ($request->hasFile('image')) {
+        //     $imageData = $request->photo;
+        //     $imageName = time() . '.jpeg';
+        //     file_put_contents(public_path('image/' . $imageName), $imageData);
+        //     $article->photo = "image/" . $imageName;
+        // }
+
+
+
 
 
         if ($article->update()) {

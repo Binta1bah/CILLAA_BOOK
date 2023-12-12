@@ -37,11 +37,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', [UserController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/info/{id}', [UserController::class, 'show']);
-    Route::put('/modifierProfil/{id}', [UserController::class, 'update']);
 });
 
+
+Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/info/{id}', [UserController::class, 'show']);
+Route::put('/modifierProfil/{id}', [UserController::class, 'update']);
 // Les routes du Bailleur
 Route::group(['middleware' => ['auth:sanctum', 'bailleur']], function () {
     Route::get('/dashboardBailleur', [UserController::class, 'dashBordBailleur']);
