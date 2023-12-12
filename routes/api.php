@@ -45,53 +45,56 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Les routes du Bailleur
 Route::group(['middleware' => ['auth:sanctum', 'bailleur']], function () {
     Route::get('/dashboardBailleur', [UserController::class, 'dashBordBailleur']);
-    Route::post('/investissement/{projet}', [InvertissementController::class, 'store']);
-    Route::get('/investissement/liste', [InvertissementController::class, 'index']);
-    Route::get('/investissement/{id}', [InvertissementController::class, 'show']);
-    Route::delete('/supprimer/investissement/{id}', [InvertissementController::class, 'destroy']);
 });
+
+Route::post('/investissement/{projet}', [InvertissementController::class, 'store']);
+Route::get('/investissement/liste', [InvertissementController::class, 'index']);
+Route::get('/investissement/{id}', [InvertissementController::class, 'show']);
+Route::delete('/supprimer/investissement/{id}', [InvertissementController::class, 'destroy']);
 
 
 // Les routes du porteur de projet
 Route::group(['middleware' => ['auth:sanctum', 'porteur']], function () {
     Route::get('/dashboardPorteur', [UserController::class, 'dashBordPorteur']);
-    Route::put('/accepterProposition/{id}', [InvertissementController::class, 'valider']);
-    Route::put('/refuserProposition/{id}', [InvertissementController::class, 'refuser']);
-    Route::post('/projets', [ProjetController::class, 'store']);
-    Route::put('/projets/{projet}', [ProjetController::class, 'update']);
-    Route::post('/projets/{projet}', [ProjetController::class, "destroy"]);
 });
 
+//deplacements des route du porteur dans son middlware
+Route::put('/accepterProposition/{id}', [InvertissementController::class, 'valider']);
+Route::put('/refuserProposition/{id}', [InvertissementController::class, 'refuser']);
+Route::post('/projets', [ProjetController::class, 'store']);
+Route::put('/projets/{projet}', [ProjetController::class, 'update']);
+Route::post('/projets/{projet}', [ProjetController::class, "destroy"]);
 
 // Les routes de l'admin
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/dashboardAdmin', [UserController::class, 'dashBordAdmin']);
     //commentaires
-    Route::delete('/commentaires/{commentaire}', [CommentaireController::class, 'destroy']);
-    //categorie
-    Route::post('/ajouterCategorie', [CategorieController::class, 'store']);
-    Route::get('/listeCtagorie', [CategorieController::class, 'index']);
-    Route::put('/ModifierCategorie/{id}', [CategorieController::class, 'update']);
-    Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
-
-    // CRUD ARTICLE
-
-    Route::post('/ajouterArticle', [ArticleController::class, 'store']);
-    Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
-    Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
-
-    // CRUD NewsLetter
-    Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
-    Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
-
-    //users
-    Route::get('/listePorteurs', [UserController::class, 'listePorteur']);
-    Route::get('/listeBailleurs', [UserController::class, 'listeBailleur']);
-    Route::post('/bloquerUser{id}', [UserController::class, 'bloquerUser']);
-    Route::post('/debloquerUser{id}', [UserController::class, 'debloquerUser']);
 });
 
+//deplacements des route de l'admin dans son middlware
 Route::post('/ajouterNewsLetter', [NewsLetterController::class, 'store']);
+Route::delete('/commentaires/{commentaire}', [CommentaireController::class, 'destroy']);
+//categorie
+Route::post('/ajouterCategorie', [CategorieController::class, 'store']);
+Route::get('/listeCtagorie', [CategorieController::class, 'index']);
+Route::put('/ModifierCategorie/{id}', [CategorieController::class, 'update']);
+Route::delete('/SupprimerCategorie/{id}', [CategorieController::class, 'destroy']);
+
+// CRUD ARTICLE
+
+Route::post('/ajouterArticle', [ArticleController::class, 'store']);
+Route::put('/modifierArticle/{article}', [ArticleController::class, 'update']);
+Route::delete('/supprimerArticle/{article}', [ArticleController::class, 'destroy']);
+
+// CRUD NewsLetter
+Route::get('/voirNewsLetters', [NewsLetterController::class, 'index']);
+Route::delete('/supprimerNewsLetter/{id}', [NewsLetterController::class, 'supprimer']);
+
+//users
+Route::get('/listePorteurs', [UserController::class, 'listePorteur']);
+Route::get('/listeBailleurs', [UserController::class, 'listeBailleur']);
+Route::post('/bloquerUser{id}', [UserController::class, 'bloquerUser']);
+Route::post('/debloquerUser{id}', [UserController::class, 'debloquerUser']);
 
 Route::get('/voirArticles', [ArticleController::class, 'index']);
 Route::get('/detailArticle/{article}', [ArticleController::class, 'show']);

@@ -95,7 +95,7 @@ class UserController extends Controller
     public function dashBordBailleur()
     {
         $user = auth()->user();
-        $investissements = Invertissement::where('user_id', $user->id)->get();
+$investissements = Invertissement::where('user_id', $user->id)->get();
         return response()->json([
             "message" => "Bienvenue sur ton Dashboard",
             "data" => $user,
@@ -116,7 +116,7 @@ class UserController extends Controller
     public function dashBordPorteur()
     {
         $user = auth()->user();
-        $projet = Projet::where('user_id', $user->id)->get();
+$projet = Projet::where('user_id', $user->id)->get();
         return response()->json([
             "message" => "Bienvenue sur ton Dashboard",
             "data" => $user,
@@ -328,7 +328,7 @@ class UserController extends Controller
      * @OA\get(
      *     path="/api/info/{id}",
      *     summary="information de profil d'un user",
-     * @OA\Parameter(
+* @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -372,7 +372,7 @@ class UserController extends Controller
      * @OA\post(
      *     path="/api/bloquerUser{id}",
      *     summary="Bloquer un user par l'admin",
-     * @OA\Parameter(
+* @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -402,7 +402,7 @@ class UserController extends Controller
      * @OA\post(
      *     path="/api/debloquerUser{id}",
      *     summary="Débloquer un user par l'admin",
-     * @OA\Parameter(
+* @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
@@ -437,7 +437,7 @@ class UserController extends Controller
      * @OA\put(
      *     path="/api/modifierProfil/{id}",
      *     summary="Modifier le profil d'un user",
-     * @OA\Parameter(
+* @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
